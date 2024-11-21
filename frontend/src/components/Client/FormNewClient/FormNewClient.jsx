@@ -302,7 +302,7 @@ function FormNewClient( { dataClient, onSubmitSuccess }) {
         }
       );
       handleReset();
-      setSuccess("Cliente Atualizado com sucesso!");
+      setSuccess("Cliente atualizado com sucesso!");
       setIsLoading(!isLoading)
       setError(null);
       SetPostToUpdade(true)

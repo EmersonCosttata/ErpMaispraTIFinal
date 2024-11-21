@@ -111,7 +111,7 @@ function FormNewPurchasing(dataPurchasing) {
         }
       );
       handleReset();
-      setSuccess("Compra adicionado com sucesso!");
+      setSuccess("Compra adicionada com sucesso!");
       setIsLoading(false);
       window.location.reload;
     } catch (err) {
@@ -152,7 +152,7 @@ function FormNewPurchasing(dataPurchasing) {
         }
       );
       handleReset();
-      setSuccess("Purchasinge Atualizado com sucesso!");
+      setSuccess("Compra atualizado com sucesso!");
       setIsLoading(!isLoading);
       setError(null);
       SetPostToUpdade(true);

@@ -72,6 +72,7 @@ button {}
     all: unset;
 
     width: 137px;
+    min-width: 137px;
     height: 38px;
     border-radius: 7px;
     background: var(--primary-normal);
@@ -90,4 +91,10 @@ button {}
     cursor: pointer;
 
     padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .div-totals {
+        flex-direction: column;
+    }
 }

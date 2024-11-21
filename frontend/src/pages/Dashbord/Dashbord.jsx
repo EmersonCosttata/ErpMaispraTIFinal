@@ -10,6 +10,7 @@ import React from "react";
 import "react-resizable/css/styles.css";
 import ExecuteSwapy from "./ExecuteSwapy/ExecuteSwapy";
 import LoadingSpin from "../../components/LoadingSpin/LoadingSpin";
+import ComponentItemSwapy from "./ComponentItemSwapy/ComponentItemSwapy";
 
 const Dashbord = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -85,6 +86,43 @@ const Dashbord = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [window.innerWidth]);
 
+
+  const apiGetSwap = async () => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/api/usuarios/${userData.id}/cards`,
+        {
+          headers: {
+            Authorization: `Bearer ${JwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setSwapData(response)
+      console.log('Dados do dashboard Baixados:');
+    } catch (err) {
+      console.error('Erro ao baixar dados do dashboard:');
+      if (err.response && err.response.data) {
+        console.error(`Erro: ${err.response.data.message}`);
+      } else {
+        console.error('Erro desconhecido');
+      }
+    }
+
+  }
+
+  
+  
+
+  
+
+
+  let dashboardLayout = { slot1: "item1", slot2: "item2", slot3: "item3", slot4: "item4", slot5: "item5" }
+
+
+
+
   return (
     <>
       {isLoading && <LoadingSpin />}
@@ -93,82 +131,58 @@ const Dashbord = () => {
         id="containerSwapy"
       >
         <div className="slot slot1 big-slot" data-swapy-slot="slot1">
-          <div className="itemSwapy item1" data-swapy-item="item1">
-            <div className="graphs">
-              <LineChartGraph
-                labels={[
-                  "Janeiro",
-                  "Fevereiro",
-                  "Março",
-                  "Abril",
-                  "Maio",
-                  "Junho",
-                  "Julho",
-                  "Agosto",
-                  "Setembro",
-                  "Outubro",
-                  "Novembro",
-                  "Dezembro",
-                ]}
-                labelData1={"Vendas Registradas"}
-                labelData2={"Vendas Canceladas"}
-                colorData1="#0E1D25"
-                colorData2="#80728A"
-              />
-            </div>
-          </div>
+          <ComponentItemSwapy item={dashboardLayout.slot1}
+            LineChartGraph={LineChartGraph}
+            CircleChart={CircleChart}
+            BoxChartValue={BoxChartValue}
+            totalClients={totalClients}
+            totalActiveClients={totalActiveClients}
+            totalSuppliers={totalSuppliers}
+            totalActiveSuppliers={totalActiveSuppliers} />
         </div>
 
         <div className="slot slot2 medium-slot" data-swapy-slot="slot2">
-          <div className="itemSwapy item2" data-swapy-item="item2">
-            <div className="graphs">
-              <CircleChart
-                title={"Clientes"}
-                total={totalClients}
-                totalActive={totalActiveClients}
-                colorTotal={"#80728A"}
-                colorTotalActive={"#0E1D25"}
-              />
-            </div>
-          </div>
+          <ComponentItemSwapy item={dashboardLayout.slot2}
+            LineChartGraph={LineChartGraph}
+            CircleChart={CircleChart}
+            BoxChartValue={BoxChartValue}
+            totalClients={totalClients}
+            totalActiveClients={totalActiveClients}
+            totalSuppliers={totalSuppliers}
+            totalActiveSuppliers={totalActiveSuppliers} />
         </div>
 
         <div className="slot slot3 medium-slot" data-swapy-slot="slot3">
-          <div className="itemSwapy item3" data-swapy-item="item3">
-            <div className="graphs">
-              <CircleChart
-                title={"Fornecedores"}
-                total={totalSuppliers}
-                totalActive={totalActiveSuppliers}
-                colorTotal={"#B4D3E4"}
-                colorTotalActive={"#1B3B4B"}
-              />
-            </div>
-          </div>
+          <ComponentItemSwapy item={dashboardLayout.slot3}
+            LineChartGraph={LineChartGraph}
+            CircleChart={CircleChart}
+            BoxChartValue={BoxChartValue}
+            totalClients={totalClients}
+            totalActiveClients={totalActiveClients}
+            totalSuppliers={totalSuppliers}
+            totalActiveSuppliers={totalActiveSuppliers} />
         </div>
         <div className="small-slots">
           <div className="slot slot4 small-slot" data-swapy-slot="slot4">
-            <div className="itemSwapy item4" data-swapy-item="item4">
-              <div className="graphs">
-                <BoxChartValue
-                  title={"Valor em caixa"}
-                  isCredit={true}
-                  value={"15610485"}
-                />{" "}
-              </div>
-            </div>
+            <ComponentItemSwapy item={dashboardLayout.slot4}
+              LineChartGraph={LineChartGraph}
+              CircleChart={CircleChart}
+              BoxChartValue={BoxChartValue}
+              totalClients={totalClients}
+              totalActiveClients={totalActiveClients}
+              totalSuppliers={totalSuppliers}
+              totalActiveSuppliers={totalActiveSuppliers} />
           </div>
 
           <div className="slot slot5 small-slot" data-swapy-slot="slot5">
-            <div className="itemSwapy item5" data-swapy-item="item5">
-              <div className="graphs">
-                <BoxChartValue
-                  title={"Valor Gasto"}
-                  isCredit={false}
-                  value={"7610485"}
-                />
-              </div>
-            </div>
+            <ComponentItemSwapy item={dashboardLayout.slot5}
+              LineChartGraph={LineChartGraph}
+              CircleChart={CircleChart}
+              BoxChartValue={BoxChartValue}
+              totalClients={totalClients}
+              totalActiveClients={totalActiveClients}
+              totalSuppliers={totalSuppliers}
+              totalActiveSuppliers={totalActiveSuppliers} />
           </div>
         </div>
       </div>

@@ -165,7 +165,7 @@ function FormNewProduct({dataProduct, onSubmitSuccess }) {
         }
       );
       handleReset();
-      setSuccess("Produto Atualizado com sucesso!");
+      setSuccess("Produto atualizado com sucesso!");
       SetPostToUpdade(true); // Flag para indicar que a atualização foi bem-sucedida
       if (onSubmitSuccess) {
         onSubmitSuccess();
