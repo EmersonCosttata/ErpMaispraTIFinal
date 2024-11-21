@@ -4,9 +4,9 @@ import "./assets/css/buttons.css";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import Header from "./components/Header/Header";
+import Header from "./components/header/header";
 import ProtectedRoute from "./components/ProtectedRoute";
-import NavigationMenu from "./components/NavigationMenu/NavigationMenu";
+import NavigationMenu from "./components/navigationMenu/NavigationMenu";
 import AddClientPage from "./pages/AddClientPage/AddClientPage";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/LoginPage/Login";

@@ -34,6 +34,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [cardId, setCardId] = useState(1);
 
   const ValuestoUpdate = (values) => {
+
     setCardItems([]);
     setNewSaleRegisterSaleId(values.id);
     setNewSaleRegisterClient(values.client);
@@ -167,6 +168,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
 
 
   const deleteCardItem = (idToDelete) => {
+    setIsLoading(true)
     setCardItems((prevItems) => prevItems.filter(item => item.id !== idToDelete));
     setCardId(cardId - 1);
     setCardItems((prevItems) => {
@@ -186,9 +188,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       return prevItems.filter(item => item.id !== idToDelete);
     });
     setCardId((prevId) => prevId - 1);
+    setIsLoading(!true)
   };
 
   const handleAddtoCard = (e) => {
+    setIsLoading(true)
     e.preventDefault();
     if (!NewSaleRegisterProduct || NewSaleRegisterProduct.length === 0) {
       setError("Nenhum produto foi selecionado.");
@@ -262,8 +266,10 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   
     setNewSaleRegisterQuant("");
     setError("");
+    setIsLoading(!true)
   };
   const handleGetClients = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/clientes`, {
         headers: {
@@ -271,11 +277,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
         },
       });
       setListClients(response.data.content);
+      setIsLoading(!true)
     } catch (err) {
       console.error("Erro ao puxar clientes", err);
     }
   };
-
   const handleGetProducts = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/produtos`, {
@@ -286,7 +292,8 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       setListProducts(response.data.content);
     } catch (err) {
       console.error("Erro ao puxar produtos", err);
-    }
+    }finally{
+    setIsLoading(!true)}
   };
 
   const handleReset = () => {

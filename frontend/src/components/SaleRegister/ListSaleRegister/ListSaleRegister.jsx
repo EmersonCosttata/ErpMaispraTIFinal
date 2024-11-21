@@ -25,6 +25,7 @@ const ListSaleRegisters = () => {
   const [listSaleRegistersPageSelected, setListSaleRegistersPage] = useState(1);
 
   const handleShowSaleRegisters = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/vendas`, {
         headers: {
@@ -34,6 +35,8 @@ const ListSaleRegisters = () => {
       setSaleRegisters(response.data.content);
     } catch (err) {
       alert("Erro ao puxar registros de venda!");
+    }finally{
+      setIsLoading(!true)
     }
   };
 
