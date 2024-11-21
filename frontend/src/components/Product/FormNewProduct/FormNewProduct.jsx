@@ -8,9 +8,8 @@ import InputField from "../../InputField/InputField";
 import TextareaField from "../../TextareaField/TextareaField";
 import LoadingSpin from '../../LoadingSpin/LoadingSpin'
 import SelectFieldSupplier from "../../SelectField/SelectFieldSupplier";
-import SelectFieldUnit from "../../SelectField/SelectFieldUnitofMeasurement";
-import ListProduct from "../ListProduct/ListProduct";
-function FormNewProduct(dataProduct, onSubmitSuccess) {
+
+function FormNewProduct(dataProduct) {
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const [ResponsiveProduct, setResponsiveProduct] = useState(true);
@@ -20,14 +19,13 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductStock, setNewProductStock] = useState("");
   const [newProductDescription, setNewProductDescription] = useState("");
-  const [newUnitofMeasurement, setNewUnitofMeasurement] = useState();
+  const [newUnitofMeasurement, setNewUnitofMeasurement] = useState("");
   const [newProductReservedStock, setNewProductReservedStock] = useState("");
   const [newProductIncomingStock, setNewProductIncomingStock] = useState("");
-  const [newProductSupplier, setNewProductSupplier] = useState();
+  const [newProducSupplier, setNewProductSupplier] = useState();
   const [newProductAvailableForSale, setNewProductAvailableForSale] = useState("");
   const [newProductSupplierCode, setNewProductSupplierCode] = useState("");
 
- 
   const [ListSupplier, setListSupplier] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [updateProductId, setUpdateProductId] = useState();
@@ -36,33 +34,15 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
 
   const { JwtToken } = useAuth();
 
-  const ProductList = [
-    { id: 1, unity: "unidade" },
-    { id: 2, unity: "barra" },
-    { id: 3, unity: "quilo" },
-    { id: 4, unity: "metro linear" },
-    { id: 5, unity: "metro quadrado" },
 
-  ];
 
-  const formatarReal = (valor) => {
-    const formatado = (valor / 1).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    return formatado;
-}
 
-  const CheckStock = (stock)=> {
+
+  const CheckStock = (stock) => {
     if (stock >= 0) {
       setError(null);
     } else {
       setError('O estoque não pode ser negativo');
-      return
-    }
-  }
-  const CheckPrice = (stock)=> {
-    if (stock > 0) {
-      setError(null);
-    } else {
-      setError('O preço não pode ser negativo ou nulo');
       return
     }
   }
@@ -87,14 +67,14 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
     while (elements.length > 0) {
       elements[0].classList.remove("isInvalid");
     }
-    setNewProductSupplierCode("")
+    setNewProductName("");
     setNewProductPrice("");
     setNewUnitofMeasurement("");
     setNewProductStock("");
     setNewProductReservedStock("");
     setNewProductIncomingStock("");
     setNewProductDescription("");
-    setNewProductSupplier()
+    setNewProductSupplier("")
     setNewProductAvailableForSale("")
     SetPostToUpdade(true);
     setError(null);
@@ -102,15 +82,16 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
     const newProductData = {
       supplierCode: newProductSupplierCode,
       name: newProductName,
       description: newProductDescription,
-      unitOfMeasure: newUnitofMeasurement[0].unity,
+      unitofMeasure: newUnitofMeasurement,
       productPrice: newProductPrice,
       stock: newProductStock,
-      suppliers: newProductSupplier
+      availableForSale: newProductAvailableForSale,
+      supplier: newProducSupplier
+
     };
     console.log(newProductData)
     if (!document.getElementById("formNewProduct").reportValidity()) {
@@ -130,13 +111,11 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
       );
       handleReset();
       setSuccess("Produto adicionado com sucesso!");
-      console.log(response)
       setIsLoading(false);
-      if (onSubmitSuccess) {
-        onSubmitSuccess();
-      }
+      window.location.reload;
     } catch (err) {
-      console.error(err);
+      setIsLoading(false);
+      console.error(newProductData.name);
       setIsLoading(false);
       setError(`${err.response.data.message}`);
 
@@ -145,25 +124,26 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
 
   const handleUpdate = async (event) => {
     setIsLoading(true)
+
     event.preventDefault();
     const newProductData = {
-      
       supplierCode: newProductSupplierCode,
       name: newProductName,
       description: newProductDescription,
-      unitofMeasure: newUnitofMeasurement[0].unity,
+      unitofMeasure: newUnitofMeasurement,
       productPrice: newProductPrice,
       stock: newProductStock,
+      availableForSale: newProductAvailableForSale,
       reservedStock: newProductReservedStock,
       incomingStock: newProductIncomingStock,
-      suppliers: newProductSupplier
+      supplier: newProducSupplier
+
     }
-    console.log(newProductData)
+
     if (!document.getElementById("formNewProduct").reportValidity()) {
       setError("Preencha todos os campos!");
       return;
     }
-
     try {
       const response = await axios.put(
         `${apiUrl}/api/produtos/${updateProductId}`,
@@ -175,16 +155,14 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
           },
         }
       );
-      console.log(response)
+      handleReset();
       setSuccess("Produto Atualizado com sucesso!");
-      setIsLoading(false)
+      setIsLoading(!isLoading)
       setError(null);
       SetPostToUpdade(true)
-      if (onSubmitSuccess) {
-        onSubmitSuccess();
-      }
+      window.location.reload()
     } catch (err) {
-      setIsLoading(false);
+      setIsLoading(!isLoading);
       if (err.response && err.response.data) {
         setError(`${err.response.data.message}`);
       } else {
@@ -206,9 +184,9 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
     setNewProductName(values.name);
     setNewProductPrice(values.productPrice);
     setNewProductStock(values.stock);
-    setNewUnitofMeasurement(values.unitofMeasure);
+    setNewUnitofMeasurement(values.unitOfMeasure);
     setNewProductDescription(values.description)
-    setNewProductSupplier(values.suppliers)
+    setNewProductSupplier(values.supplier)
     setNewProductIncomingStock(values.incomingStock)
     setNewProductReservedStock(values.reservedStock)
   };
@@ -219,33 +197,24 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
       SetPostToUpdade(false);
     }
   }, [dataProduct]);
-  
-    const handleShowSuppliers = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/fornecedores",
-          {
-            headers: {
-              Authorization: `Bearer ${JwtToken}`,
-            },
-          }
-        );
 
-        const listSupplier = response.data.content.map((supplier) => ({
-          id: supplier.id,
-          fullName: supplier.fullName,
-        }));
+  const handleGetSupplier = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/suplier`, {
+        headers: {
+          Authorization: `Bearer ${JwtToken}`,
+        },
+      });
+      console.log(response.data)
+      setListSupplier(response.data.content.id);
+    } catch (err) {
+      console.error("Erro ao puxar produtos", err);
+    }
+  };
 
-        setListSupplier(listSupplier);
-      } catch (err) {
-        console.log(err);
-        alert("Erro ao puxar fornecedores!");
-      }
-    };
-    useEffect(() => {
-      handleShowSuppliers();      
-    }, []);
-    
+  useEffect(() => {
+    handleGetSupplier();
+  }, []);
 
   return (
     <div className="containerForm">
@@ -264,12 +233,12 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
         onSubmit={PostToUpdate ? handleSubmit : handleUpdate}
       >
         <div className="line1 line">
-        <InputField
+          <InputField
             label={"Código do Produto:"}
             placeholder={"Digite o código do Produto"}
             name={"codigoDoProduto"}
             idInput={"newProductSupplierCode"}
-            classNameDiv="fiedSupplierCode"
+            classNameDiv="fieldSupplierCode"
             value={newProductSupplierCode}
             onChange={(e) => {
               setNewProductSupplierCode(e.target.value);
@@ -301,20 +270,24 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
             onChange={(e) => {
               setNewProductPrice(e.target.value);
               isValid(e);
-              CheckPrice(e.target.value)
             }}
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
 
         <div className="line2 line">
-          <SelectFieldUnit
+          <InputField
             label={"Unidade de Medida:"}
-            placeholder="Unidade de Medida"
-            arrayOptions={ProductList}
+            placeholder={"Digite uma unidade de medida"}
+            name={"UnidadeDeMedida"}
+            idInput={"newUnitofMeasurement"}
+            classNameDiv="fieldUnitofMeasurement"
             value={newUnitofMeasurement}
-            onChangeValue={setNewUnitofMeasurement}
-            
+            onChange={(e) => {
+              setNewUnitofMeasurement(e.target.value);
+              isValid(e);
+            }}
+            onInvalid={(e) => isInvalid(e)}
           />
 
           <InputField
@@ -328,26 +301,20 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
             onChange={(e) => {
               setNewProductStock(e.target.value);
               isValid(e);
-              CheckStock(e.target.value)
+              CheckStock(newProductStock)
             }}
             onInvalid={(e) => isInvalid(e)}
           />
           <SelectFieldSupplier
-              label={"Fornecedor:"}
-              name={"Supplier"}
-              id={"Supplier"}
-              classnameDiv={"divSelectSupplier"}
-              classNameSelect={"selectSupplier"}
-              value={newProductSupplier ? JSON.stringify(newProductSupplier[0]) : ""}
-              onInvalid={(e) => selectIsInvalid(e)}
-              onChange={(e) => {
-                const selectedSupplier = JSON.parse(e.target.value);
-                setNewProductSupplier([selectedSupplier]);
-                console.log(selectedSupplier)
-                isValid(e);
-              }}
-              arrayOptions={ListSupplier}
-            />
+            label={"Fornecedor"}
+            placeholder="Fornecedor"
+            arrayOptions={ListSupplier}
+            value={newProducSupplier}
+            onChangeValue={setNewProductSupplier}
+            classNameDiv="fieldSupplier"
+          />
+
+
         </div>
 
         <div className="line3 line">
@@ -365,27 +332,35 @@ function FormNewProduct(dataProduct, onSubmitSuccess) {
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
+        
 
-        <div className="errorsOrSuccess">
-          <p style={{ color: "red" }}>{Error && Error}</p>
-          <p style={{ color: "green" }}>{Success && Success}</p>
+
+        <div className="line line5">
+          <div className="divStatusAndButtons">
+
+            <div className="errorsOrSuccess">
+              <p style={{ color: "red" }}>{Error && Error}</p>
+              <p style={{ color: "green" }}>{Success && Success}</p>
+            </div>
+            <div className="divButtons">
+              <button
+                type="submit"
+                className="primaryNormal"
+                onClick={PostToUpdate ? handleSubmit : handleUpdate}
+              >
+                {PostToUpdate ? "Salvar" : "Atualizar"}
+              </button>
+              <button
+                type="reset"
+                className="primaryLight"
+                onClick={() => handleReset()}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="divButtons">
-          <button
-            type="submit"
-            className="primaryNormal"
-            onClick={PostToUpdate ? handleSubmit : handleUpdate}
-          >
-            {PostToUpdate ? "Salvar" : "Atualizar"}
-          </button> 
-          <button
-            type="reset"
-            className="primaryLight"
-            onClick={() => handleReset()}
-          >
-            Cancelar
-          </button>
-        </div>
+
       </form >
       {isLoading && <LoadingSpin />}
     </div >
