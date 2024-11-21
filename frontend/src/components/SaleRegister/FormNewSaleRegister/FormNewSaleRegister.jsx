@@ -61,6 +61,12 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+  // Validação do formulário
+  if (!document.getElementById("formSaleRegister").reportValidity()) {
+    setError("Preencha todos os campos!");
+    setIsLoading(false);
+    return;
+  }
 
     try {
       const response = await axios.post(
@@ -117,7 +123,12 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       expectedDeliveryDate: NewSaleRegisterDataPrev, 
       saleStatus: "pendente",
     };
-  
+   // Validação do formulário
+   if (!document.getElementById("formSaleRegister").reportValidity()) {
+    setError("Preencha todos os campos!");
+    setIsLoading(false);
+    return;
+  }
     try {
       const response = await axios.put(
         `${apiUrl}/api/vendas/${NewSaleRegisterSaleId}`,
