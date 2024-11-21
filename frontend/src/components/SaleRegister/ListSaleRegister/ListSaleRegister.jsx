@@ -21,7 +21,7 @@ const ListSaleRegisters = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [saleRegisterNameShow, setSaleRegisterNameShow] = useState("");
-
+  const [contRegisterPages, setContRegisterPages] = useState(0);
   const [listSaleRegistersPageSelected, setListSaleRegistersPage] = useState(1);
 
   const handleShowSaleRegisters = async () => {
@@ -164,16 +164,7 @@ const ListSaleRegisters = () => {
                   <button onClick={() => window.handleModalConfirm(true)}>Sim</button>
                   <button onClick={() => window.handleModalConfirm(false)}>Não</button>
                 </ModalYesOrNot>
-                  deleteItem={saleRegisterNameShow}
-                  onConfirm={() => {
-                    window.handleModalConfirm(true);
-                    setShowModal(false);
-                  }}
-                  onClose={() => {
-                    window.handleModalConfirm(false);
-                    setShowModal(false);
-                  }}
-                />
+              
                 <PageOfListSaleRegister
                   SaleRegisters={filteredSaleRegisters}
                   onEdit={ToFormUpdateSaleRegister}
@@ -186,7 +177,7 @@ const ListSaleRegisters = () => {
           </div>
           <div className="pagination">
             <NavigationListSaleRegister
-              contSaleRegisterPages={contSaleRegisterPages}
+              contSaleRegisterPages={contRegisterPages}
               totalPages={totalPages}
               setListSaleRegistersPage={setListSaleRegistersPage}
             />

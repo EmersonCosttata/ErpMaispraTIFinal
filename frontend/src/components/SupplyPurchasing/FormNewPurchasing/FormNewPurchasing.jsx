@@ -63,6 +63,7 @@ function FormNewPurchasing(dataPurchasing) {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     const handleShowSuppliers = async () => {
       try {
 
@@ -78,7 +79,7 @@ function FormNewPurchasing(dataPurchasing) {
         }));
 
         setListSupplierSelect(listSupplier);
-        console.log(listSupplierSelect);
+        setIsLoading(true)
       } catch (err) {
         console.log(err);
         alert("Erro ao puxar fornecedores!");

@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class SaleItemServiceTest {
     @Spy
@@ -113,9 +114,9 @@ class SaleItemServiceTest {
         productDto.setProductPrice(BigDecimal.valueOf(100.0));
         productDto.setStock(BigDecimal.valueOf(50.0));
 
-        Mockito.when(saleService.findById(Mockito.anyLong())).thenReturn(Optional.of(new SaleDto()));
-        Mockito.when(productService.findById(Mockito.anyLong())).thenReturn(Optional.of(productDto));
-        Mockito.when(saleItemRepository.save(Mockito.any(SaleItem.class))).thenReturn(saleItem);
+        when(saleService.findById(Mockito.anyLong())).thenReturn(Optional.of(new SaleDto()));
+        when(productService.findById(Mockito.anyLong())).thenReturn(Optional.of(productDto));
+        when(saleItemRepository.save(Mockito.any(SaleItem.class))).thenReturn(saleItem);
 
         // Quando
         SaleItemResponseDto response = saleItemService.insert(1L, saleInsertItemDto);
@@ -135,7 +136,7 @@ class SaleItemServiceTest {
     @Test
     void deveLancarErroQuandoVendaNaoEncontrada() {
         // Dado
-        Mockito.when(saleService.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        when(saleService.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         // Quando
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
@@ -150,7 +151,7 @@ class SaleItemServiceTest {
     @Test
     void deveEncontrarItemDeVendaPorSaleIdEItemId() {
         // Dado
-        Mockito.when(saleItemRepository.findByIdAndSaleId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.of(saleItem));
+        when(saleItemRepository.findByIdAndSaleId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.of(saleItem));
 
         // Quando
         Optional<SaleItemResponseDto> response = saleItemService.findBySaleIdAndSaleItemId(1L, 1L);
@@ -163,7 +164,7 @@ class SaleItemServiceTest {
     @Test
     void deveLancarErroQuandoItemDeVendaNaoEncontrado() {
         // Dado
-        Mockito.when(saleItemRepository.findByIdAndSaleId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.empty());
+        when(saleItemRepository.findByIdAndSaleId(Mockito.anyLong(), Mockito.anyLong())).thenReturn(Optional.empty());
 
         // Quando
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
@@ -177,8 +178,8 @@ class SaleItemServiceTest {
     @Test
     void deveAtualizarItemDeVenda() {
         // Dado
-        Mockito.when(saleItemRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(saleItem));
-        Mockito.when(saleItemRepository.save(Mockito.any(SaleItem.class))).thenReturn(saleItem);
+        when(saleItemRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(saleItem));
+        when(saleItemRepository.save(Mockito.any(SaleItem.class))).thenReturn(saleItem);
 
         // Quando
         SaleItemResponseDto response = saleItemService.update(1L, saleItemUpdateDto);
@@ -193,7 +194,7 @@ class SaleItemServiceTest {
     @Test
     void deveLancarErroQuandoTentarAtualizarItemInexistente() {
         // Dado
-        Mockito.when(saleItemRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        when(saleItemRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
         // Quando
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
@@ -208,7 +209,7 @@ class SaleItemServiceTest {
     void deveRetornarTodosItensDeVendaPorSaleId() {
         // Dado
         Page<SaleItem> saleItems = new PageImpl<>(List.of(saleItem));
-        Mockito.when(saleItemRepository.findBySaleId(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(saleItems);
+        when(saleItemRepository.findBySaleId(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(saleItems);
 
         // Quando
         Page<SaleItemResponseDto> response = saleItemService.findAllBySaleId(1L, Pageable.unpaged());
@@ -222,7 +223,7 @@ class SaleItemServiceTest {
     void deveRetornarTodosItensDeVendaPorProductId() {
         // Dado
         Page<SaleItem> saleItems = new PageImpl<>(List.of(saleItem));
-        Mockito.when(saleItemRepository.findBySaleIdAndProductId(Mockito.anyLong(), Mockito.anyLong(), Mockito.any(Pageable.class)))
+        when(saleItemRepository.findBySaleIdAndProductId(Mockito.anyLong(), Mockito.anyLong(), Mockito.any(Pageable.class)))
                 .thenReturn(saleItems);
 
         // Quando
@@ -237,7 +238,7 @@ class SaleItemServiceTest {
     void deveRetornarTodosItensDeVenda() {
         // Dado
         Page<SaleItem> saleItems = new PageImpl<>(List.of(saleItem));
-        Mockito.when(saleItemRepository.findAll(Mockito.any(Pageable.class))).thenReturn(saleItems);
+        when(saleItemRepository.findAll(Mockito.any(Pageable.class))).thenReturn(saleItems);
 
         // Quando
         Page<SaleItemResponseDto> response = saleItemService.findAll(Pageable.unpaged());
@@ -286,7 +287,7 @@ class SaleItemServiceTest {
         existingSaleItem.setQuantityDelivered(new BigDecimal(10));
 
         // Simulando o repositório para retornar esse SaleItem
-        Mockito.when(saleItemRepository.findById(1L)).thenReturn(Optional.of(existingSaleItem));
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.of(existingSaleItem));
 
         // Criando o DTO de atualização com quantidade menor que a entregue
         SaleItemUpdateDto saleItemUpdateDto = new SaleItemUpdateDto();
@@ -312,7 +313,7 @@ class SaleItemServiceTest {
         saleItem.setProduct(product);
 
         // Simulando o repositório para retornar o SaleItem
-        Mockito.when(saleItemRepository.findById(2L)).thenReturn(Optional.of(saleItem));
+        when(saleItemRepository.findById(2L)).thenReturn(Optional.of(saleItem));
 
         // Simulando a atualização do produto no service
         Mockito.doNothing().when(productService).updateDeletedItemToSaleItems(Mockito.anyLong(), Mockito.any(BigDecimal.class));
@@ -321,9 +322,9 @@ class SaleItemServiceTest {
         saleItemService.delete(2L);
 
         // Verificando se o repositório de SaleItem foi chamado para deletar o item
-        Mockito.verify(saleItemRepository, Mockito.times(1)).deleteById(2L);
+        verify(saleItemRepository, times(1)).deleteById(2L);
         // Verificando se a atualização do produto foi chamada
-        Mockito.verify(productService, Mockito.times(1)).updateDeletedItemToSaleItems(Mockito.anyLong(), Mockito.any(BigDecimal.class));
+        verify(productService, times(1)).updateDeletedItemToSaleItems(Mockito.anyLong(), Mockito.any(BigDecimal.class));
     }
 
     @Test
@@ -338,7 +339,7 @@ class SaleItemServiceTest {
         saleItem.setProduct(product);
 
         // Simulando o repositório para retornar o SaleItem
-        Mockito.when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
 
         // Chamando o método delete e verificando se lança a exceção correta
         try {
@@ -350,7 +351,7 @@ class SaleItemServiceTest {
         }
 
         // Verificando se o repositório de SaleItem não foi chamado para deletar o item
-        Mockito.verify(saleItemRepository, Mockito.never()).deleteById(1L);
+        verify(saleItemRepository, Mockito.never()).deleteById(1L);
     }
 
     @Test
@@ -365,7 +366,7 @@ class SaleItemServiceTest {
         saleItem.setProduct(product);
 
         // Simulando o repositório para retornar o SaleItem
-        Mockito.when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
 
         // Simulando uma DataIntegrityViolationException quando o repositório tentar excluir
         Mockito.doThrow(DataIntegrityViolationException.class).when(saleItemRepository).deleteById(1L);
@@ -380,13 +381,13 @@ class SaleItemServiceTest {
         }
 
         // Verificando se o repositório de SaleItem foi chamado para deletar o item
-        Mockito.verify(saleItemRepository).deleteById(1L);
+        verify(saleItemRepository).deleteById(1L);
     }
 
     @Test
     void testGetProductAndUpdateStock_ProdutoNaoEncontrado() {
         // Simulando o caso em que o produto não é encontrado
-        Mockito.when(productService.findById(Mockito.anyLong()))
+        when(productService.findById(Mockito.anyLong()))
                 .thenReturn(Optional.empty());
 
         // Tentando invocar o método e verificar se a exceção é lançada
@@ -408,7 +409,7 @@ class SaleItemServiceTest {
         // Acessando um valor do enum UnitOfMeasure (por exemplo, KG)
         productDto.setUnitOfMeasure(UnitOfMeasure.KG);  // Ou qualquer valor existente no seu enum
 
-        Mockito.when(productService.findById(Mockito.anyLong()))
+        when(productService.findById(Mockito.anyLong()))
                 .thenReturn(Optional.of(productDto));
 
         // Mock para verificar se a quantidade de produto é suficiente
@@ -432,7 +433,7 @@ class SaleItemServiceTest {
         productDto.setId(1L);
         productDto.setStock(new BigDecimal(20));  // Estoque suficiente
 
-        Mockito.when(productService.findById(Mockito.anyLong()))
+        when(productService.findById(Mockito.anyLong()))
                 .thenReturn(Optional.of(productDto));
 
         // Método de atualização de estoque deve ser chamado
@@ -442,7 +443,7 @@ class SaleItemServiceTest {
         saleItemService.processSaleItem(1L, new BigDecimal(5));  // Quantidade dentro do estoque
 
         // Verificar se o método de atualização de estoque foi chamado
-        Mockito.verify(productService).updateStockBySale(Mockito.anyLong(), Mockito.any(BigDecimal.class));
+        verify(productService).updateStockBySale(Mockito.anyLong(), Mockito.any(BigDecimal.class));
     }
 
     @Test
@@ -462,6 +463,100 @@ class SaleItemServiceTest {
         } catch (ProductException e) {
             assertEquals("A quantidade de produtos deve ser maior que zero.", e.getMessage());
         }
+    }
+
+    @Test
+    void testFindById_whenSaleItemExists() {
+        // Arrange
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
+
+        // Act
+        SaleItemResponseDto result = saleItemService.findById(1L);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        // Adicione mais asserts para os outros campos de SaleItemResponseDto, se necessário
+    }
+
+    @Test
+    void testFindById_whenSaleItemDoesNotExist() {
+        // Arrange
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Act
+        SaleItemResponseDto result = saleItemService.findById(1L);
+
+        // Assert
+        assertNull(result);
+    }
+
+    @Test
+    void testUpdateItemDeliveryQuantity_whenSaleItemExists() {
+        // Arrange
+        BigDecimal newQuantity = new BigDecimal("10.0");
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.of(saleItem));
+
+        // Act
+        saleItemService.updateItemDeliveryQuantity(1L, newQuantity);
+
+        // Assert
+        assertEquals(newQuantity, saleItem.getQuantityDelivered());
+        verify(saleItemRepository, times(1)).save(saleItem);
+    }
+
+    @Test
+    void testUpdateItemDeliveryQuantity_whenSaleItemDoesNotExist() {
+        // Arrange
+        BigDecimal newQuantity = new BigDecimal("10.0");
+        when(saleItemRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(ResourceNotFoundException.class, () -> {
+            saleItemService.updateItemDeliveryQuantity(1L, newQuantity);
+        });
+    }
+    @Test
+    void testInsertItemWhenItemExists() {
+        // Dado
+        Long saleId = 1L;
+        Long productId = 2L;
+        BigDecimal quantitySold = new BigDecimal("10"); // Quantidade vendida que queremos
+        BigDecimal salePrice = new BigDecimal("100");
+
+        SaleInsertItemDto saleInsertItemDto = new SaleInsertItemDto();
+        saleInsertItemDto.setProductId(productId);
+        saleInsertItemDto.setQuantitySold(quantitySold);
+        saleInsertItemDto.setSalePrice(salePrice);
+
+        // Mockando a venda existente
+        SaleDto saleDto = new SaleDto();
+        saleDto.setId(saleId);
+        when(saleService.findById(saleId)).thenReturn(Optional.of(saleDto));
+
+        // Mockando o item de venda existente
+        SaleItem existingSaleItem = new SaleItem();
+        existingSaleItem.setQuantitySold(new BigDecimal("5")); // Quantidade já vendida
+        existingSaleItem.setQuantityDelivered(new BigDecimal("2"));
+        existingSaleItem.setSalePrice(salePrice);
+        existingSaleItem.addToQuantityPending(BigDecimal.ZERO);  // Inicializa a quantidade pendente como 0
+
+        when(saleItemRepository.findByProductIdAndSaleIdAndSalePrice(
+                productId, saleId, salePrice
+        )).thenReturn(Optional.of(existingSaleItem));
+
+        // Mockando o produto existente no serviço com estoque insuficiente
+        ProductDto productDto = new ProductDto();
+        productDto.setId(productId);
+        productDto.setReservedStock(new BigDecimal("4")); // Estoque disponível é 4
+        productDto.setUnitOfMeasure(UnitOfMeasure.UNIT);  // Corrigido de PIECE para UNIT
+        when(productService.findById(productId)).thenReturn(Optional.of(productDto));
+
+        // Ação: Tenta inserir o item, o que deve gerar um erro de estoque insuficiente
+        assertThrows(ProductException.class, () -> saleItemService.insert(saleId, saleInsertItemDto));
+
+        // Verifica que o erro esperado foi lançado
+        // O teste passará se a exceção ProductException for lançada corretamente com a mensagem esperada
     }
 
 }

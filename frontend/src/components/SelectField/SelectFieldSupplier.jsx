@@ -14,34 +14,59 @@ function SelectFieldProduct({
   classNameSelect = "",
   classNameDiv = "",
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [selectedOption, setSelectedOption] = useState(null); 
+
   const filteredOptions = (arrayOptions || []).filter((option) =>
-    option.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    option.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-
+useEffect(()=>{
+  if(value.suppliersFullName){
+    setSearchTerm(value.suppliersFullName.fullName)
+  }else{
+    return
+  }
+},[value])
   useEffect(() => {
-    onChangeValue(filteredOptions);
-  }, [searchTerm]);
+    if (selectedOption) {
+      onChangeValue(selectedOption); 
+    }
+  }, [selectedOption, onChangeValue]);
 
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+
+  
+    const matchedOption = arrayOptions.find(
+      (option) => option.fullName.toLowerCase() === e.target.value.toLowerCase()
+    );
+    if (matchedOption) {
+      setSelectedOption(matchedOption);
+    } else {
+      setSelectedOption(null); 
+    }
+  };
   return (
     <div className={classNameDiv}>
       <label htmlFor={id} className="inputLabel">
         <span className="inputDescription">{label}</span>
-        
-        <input 
-          list="products" 
-          placeholder="Digite..." 
-          onChange={(e) => setSearchTerm(e.target.value)} 
+        <input
+          list="products"
+          placeholder={placeholder}
           value={searchTerm}
+          onChange={handleInputChange}
+          name={name}
+          id={id}
+          required={required}
+          className={classNameSelect}
         />
-
         <datalist id="products">
           {filteredOptions.map((option) => (
-            <option
-              key={option.id}
-              value={option.name}
-            />
+             <option
+             key={option.id}
+             value={option.fullName} 
+             label={`${option.status.toUpperCase()} | Nota: ${option.notes}`}
+           />
           ))}
         </datalist>
       </label>

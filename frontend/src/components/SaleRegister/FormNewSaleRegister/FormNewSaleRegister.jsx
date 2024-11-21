@@ -23,7 +23,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [ListClients, setListClients] = useState([]);
   const [ListProducts, setListProducts] = useState([]);
 
-  const [NewSaleRegisterClientId, setNewSaleRegisterClientId] = useState('');
+  const [NewSaleRegisterSaleId, setNewSaleRegisterSaleId] = useState('');
   const [NewSaleRegisterClient, setNewSaleRegisterClient] = useState('');
   const [NewSaleRegisterSaller, setNewSaleRegisterSaller] = useState(decoded.fullName);
   const [NewSaleRegisterData, setNewSaleRegisterData] = useState('');
@@ -35,11 +35,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
 
   const ValuestoUpdate = (values) => {
     setCardItems([]);
-    setNewSaleRegisterClientId(values.id);
+    setNewSaleRegisterSaleId(values.id);
     setNewSaleRegisterClient(values.client);
     setNewSaleRegisterSaller(decoded.fullName);
     setNewSaleRegisterDataPrev(values.expectedDeliveryDate);
-    setNewSaleRegisterData('');
+    setNewSaleRegisterData(values.saleDate);
     setNewSaleRegisterProduct('');
     setNewSaleRegisterQuant('');
     setCardId(1);
@@ -111,22 +111,15 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const handleUpdate = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-
     const salePayload = {
-      saleDate: NewSaleRegisterData,
-      expectedDeliveryDate: NewSaleRegisterDataPrev,
-      // saleItems: CardItems.map((card) => ({
-      //   productId: card.productId,
-      //   quantitySold: card.quant,
-      //   salePrice: card.price,
-      // })),
-      saleItems: [],
+      saleDate: NewSaleRegisterData, 
+      expectedDeliveryDate: NewSaleRegisterDataPrev, 
       saleStatus: "pendente",
     };
-    console.log("Payload:", salePayload);
-
+  
     try {
-      const response = await axios.put(`${apiUrl}/api/vendas/${NewSaleRegisterClientId}`,
+      const response = await axios.put(
+        `${apiUrl}/api/vendas/${NewSaleRegisterSaleId}`,
         salePayload,
         {
           headers: {
@@ -135,20 +128,42 @@ function FormNewSaleRegister({ dataSaleRegister }) {
           },
         }
       );
-      console.log(response)
-      setSuccess("Venda Atualizada com sucesso!");
+  
+      console.log("Venda atualizada:", response.data.saleItems[0].id);
+      let updatedSaleIdList = response.data.saleItems.map((item) => item.id);
+      Console.log(updatedSaleIdList)
+      const saleRequestsUpdate = CardItems.map((card, index) =>
+        axios.put(
+          `${apiUrl}/api/vendas/itens/${updatedSaleIdList[index]}`, 
+          {
+            productId: +card.productId,
+            quantitySold: +card.quant,
+            salePrice: +card.price,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JwtToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+      );
+  
+      await Promise.all(saleRequestsUpdate);
+      setSuccess("Venda e itens atualizados com sucesso!");
       handleReset();
     } catch (err) {
-      setError("Erro ao Atualizar itens de venda");
-      console.log("Erro:", err);
+      console.error("Erro ao atualizar venda:", err);
+      setError("Erro ao atualizar itens de venda.");
+  
       if (err.response && err.response.data) {
-        setError(`${err.response.data.message}`);
+        setError(err.response.data.message || "Erro desconhecido.");
       }
     } finally {
       setIsLoading(false);
     }
   };
-
+  
 
 
   const deleteCardItem = (idToDelete) => {

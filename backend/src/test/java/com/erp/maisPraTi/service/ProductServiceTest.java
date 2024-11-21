@@ -497,6 +497,24 @@ class ProductServiceTest {
         assertThrows(DatabaseException.class, () -> productService.delete(productId));
     }
 
+    @Test
+    void testUpdateItemDeliveryQuantity_Success() {
+        // Arrange
+        BigDecimal quantityDelivery = new BigDecimal("5");
+        Product product = new Product();
+        product.setStock(new BigDecimal("100"));
+        product.setReservedStock(new BigDecimal("10"));
+        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+
+        // Act
+        productService.updateItemDeliveryQuantity(1L, quantityDelivery);
+
+        // Assert
+        assertEquals(new BigDecimal("95"), product.getStock()); // Estoque após a subtração
+        assertEquals(new BigDecimal("5"), product.getReservedStock()); // Estoque reservado após a subtração
+        verify(productRepository).save(product); // Verifica se o método save foi chamado
+    }
+
 
 }
 
