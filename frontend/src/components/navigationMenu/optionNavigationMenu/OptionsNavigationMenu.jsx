@@ -14,35 +14,35 @@ function OptionsNavigationMenu() {
   let options = [
     {
       icon: newClientIcon,
-      description: "Novo Cliente",
+      description: "Clientes",
       url: "/cliente",
     },
     {
       icon: newSupplierIcon,
-      description: "Novo Fornecedor",
+      description: "Fornecedores",
       url: "/fornecedor",
     },
     {
       icon: newProductIcon,
-      description: "Novo Produto",
+      description: "Produtos",
       url: "/produtos",
     },
     {
       icon: newBuyIcon,
       description: "Compra de Insumos",
-      url: "/compraInsumos",
+      url: "/comprainsumos",
     },
     {
       icon: newSaleIcon,
       description: "Venda de Produtos",
-      url: "/registroDeVendas",
+      url: "/registrodevendas",
     },
   ];
 
   if (userProfile === "ROLE_OPERATOR" || userProfile === "ROLE_ADMIN") {
     options.push({
       icon: newUserIcon,
-      description: "Novo Usuário",
+      description: "Usuários",
       url: "/funcionario",
     });
   }
