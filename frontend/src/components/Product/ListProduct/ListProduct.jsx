@@ -88,7 +88,10 @@ const ListProduct = () => {
   return (
     <>
       {isLoading && <LoadingSpin />}
-      <FormNewProduct dataProduct={productUpdate} />
+      <FormNewProduct 
+      dataProduct={productUpdate}
+      onSubmitSuccess = {handleShowProducts}
+      />
       <div className="contentListProducts">
         <div className="ListProducts">
           <div className="headerListProducts">

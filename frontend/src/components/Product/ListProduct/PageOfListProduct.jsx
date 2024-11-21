@@ -12,10 +12,10 @@ function PageOfListProducts({
   maxProductsPerList,
   listProductsPageSelected,
 }) {
-//   const formatarReal = (valor) => {
-//     const formatado = (valor / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-//     return formatado;
-// }
+  const formatarReal = (valor) => {
+    const formatado = (valor / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return formatado;
+}
 
   const [showModalDetails, setshowModalDetails] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -46,7 +46,7 @@ function PageOfListProducts({
         <tr key={products.id}>
           <td className="td-fullName">{products.name}</td>
           <td className="td-price">{products.stock}</td>
-          <td className="td-stock">R$ {products.productPrice}</td>
+          <td className="td-stock">R$ {formatarReal(products.productPrice)}</td>
 
           <td className="td-editLine">
             <Link onClick={() => {
