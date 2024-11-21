@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: api-erp
+    ports:
+      - "8080:8080"    # Mapeia a porta 8080 do container para a porta 8080 da instância
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/bd_dev
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - db               # Garante que o banco de dados suba primeiro
+    networks:
+      - minha-rede
+
+  db:
+    image: mysql:8.0        # Versão mais recente do MySQL
+    container_name: bd_dev
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Senha do root
+      MYSQL_USER: user                 # Usuário da aplicação
+      MYSQL_PASSWORD: password         # Senha do usuário
+      MYSQL_DATABASE: meubanco          # Nome do banco de dados a ser criado
+    ports:
+      - "3306:3306"       # Mapeia a porta 3306 do container para a porta 3306 da instância
+    volumes:
+      - mysql-data:/var/lib/mysql  # Volume persistente para armazenar dados
+    networks:
+      - minha-rede
+
+volumes:
+  mysql-data:
+
+networks:
+  minha-rede:
+    driver: bridge
