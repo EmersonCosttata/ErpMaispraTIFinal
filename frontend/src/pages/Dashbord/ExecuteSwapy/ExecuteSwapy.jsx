@@ -20,7 +20,7 @@ function ExecuteSwapy() {
   const apiGetSwap = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/usuarios/${userData.id}/cards`,
+        `${apiUrl} / api / usuarios / ${userData.id} / cards`,
         {
           headers: {
             Authorization: `Bearer ${JwtToken}`,
@@ -46,7 +46,7 @@ function ExecuteSwapy() {
     try {
 
       const response = await axios.post(
-        `${apiUrl}/api/usuarios/${userId}/cards`,
+        `${apiUrl} / api / usuarios / ${userId} / cards`,
         obj,
         {
           headers: {
@@ -73,7 +73,7 @@ function ExecuteSwapy() {
 
   const handleShowEmployees = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/usuarios`, {
+      const response = await axios.get(`${ apiUrl } / api / usuarios`, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
         },
@@ -81,7 +81,7 @@ function ExecuteSwapy() {
       const loggedUser = response.data.content.find(
         (user) => user.email === decoded.sub
       );
-
+      console.log(loggedUser)
       setUserData(loggedUser);
 
       setLoading(false);
@@ -112,7 +112,7 @@ function ExecuteSwapy() {
       }
       return true;
     };
-  
+
     if (isValidSlots()) {
       time(event.data.object);
     }
