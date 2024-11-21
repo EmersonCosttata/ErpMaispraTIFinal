@@ -1,47 +1,18 @@
-import { createSwapy } from 'swapy'
+import { createSwapy } from 'swapy';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../components/AuthContext';
-
 import { debounce } from 'lodash';
 import { jwtDecode } from "jwt-decode";
-
-
-
 function ExecuteSwapy() {
   const { JwtToken } = useAuth();
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [userData, setUserData] = useState([]);
-  const [SwapData, setSwapData] = useState([])
-  const container = document.querySelector('#containerSwapy')
+  const [userData, setUserData] = useState({});
+  const container = document.querySelector('#containerSwapy');
   const decoded = jwtDecode(JwtToken);
-  const swapy = createSwapy(container)
+  const swapy = createSwapy(container);
 
-  const apiGetSwap = async () => {
-    try {
-      const response = await axios.get(
-        `${apiUrl} / api / usuarios / ${userData.id} / cards`,
-        {
-          headers: {
-            Authorization: `Bearer ${JwtToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      setSwapData(response.content)
-      console.log('Dados do dashboard Baixados:');
-    } catch (err) {
-      console.error('Erro ao baixar dados do dashboard:');
-      if (err.response && err.response.data) {
-        console.error(`Erro: ${err.response.data.message}`);
-      } else {
-        console.error('Erro desconhecido');
-      }
-    }
-
-  }
-const handleShowEmployees = async () => {
+  const handleShowEmployees = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/usuarios`, {
         headers: {
@@ -51,18 +22,27 @@ const handleShowEmployees = async () => {
       const loggedUser = response.data.content.find(
         (user) => user.email === decoded.sub
       );
-      console.log(loggedUser)
-      setUserData(loggedUser);
+      console.log("Usuário logado:", loggedUser);
+      setUserData(loggedUser); // Define o estado de `userData`
     } catch (err) {
-      console.error(err);
+      console.error("Erro ao buscar usuários:", err);
+    }finally{
+      console.log(userData)
     }
   };
+  useEffect(() => {
+    handleShowEmployees();
+  }, []);
 
-  const apiResgisterSwap = async (userId, obj) => {
+  const apiResgisterSwap = async (obj) => {
+    if (!userData.id) {
+      console.error("Usuário não está definido ainda.");
+      return;
+    }
+
     try {
-
       const response = await axios.post(
-        `${apiUrl}/api/usuarios/${userId}/cards`,
+        `${apiUrl}/api/usuarios/2/cards`,
         obj,
         {
           headers: {
@@ -71,31 +51,23 @@ const handleShowEmployees = async () => {
           },
         }
       );
-
-      console.log(response.status)
-      console.log('Dados do dashboard registrados:', obj);
+      console.log("Status da resposta:", response.status);
+      console.log("Dados registrados com sucesso:", obj);
     } catch (err) {
-
-      console.error('Erro ao registrar dados do dashboard:', err);
-
+      console.error("Erro ao registrar dados do dashboard:", err);
       if (err.response && err.response.data) {
         console.error(`Erro: ${err.response.data.message}`);
       } else {
-        console.error('Erro desconhecido');
+        console.error("Erro desconhecido");
       }
     }
-
-  }
-
-  
+  };
 
   useEffect(() => {
-    handleShowEmployees();
-    // apiGetSwap()
-  }, []);
-
-
-  swapy.enable(true)
+    if (userData.id) {
+      swapy.enable(true);
+    }
+  }, [userData]);
 
   const handleSwap = debounce((event) => {
     let items = [];
@@ -117,18 +89,18 @@ const handleShowEmployees = async () => {
 
   swapy.onSwap(handleSwap);
 
-  let timeOutSwap
+  let timeOutSwap;
 
-  let time = (obj) => {
+  const time = (obj) => {
     if (timeOutSwap) {
-      clearTimeout(timeOutSwap)
+      clearTimeout(timeOutSwap);
     }
 
     timeOutSwap = setTimeout(() => {
-      apiResgisterSwap(userData.id, obj)
-    }, 2000)
-  }
-
-
+      apiResgisterSwap(obj);
+    }, 2000);
+  };
 }
-export default ExecuteSwapy
+
+
+export default ExecuteSwapy;
