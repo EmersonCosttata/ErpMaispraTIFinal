@@ -23,6 +23,7 @@ const ListProduct = () => {
 
   const [listProductsPageSelected, setListProductsPage] = useState(1);
   const handleShowProducts = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/produtos`, {
         headers: {
@@ -30,6 +31,7 @@ const ListProduct = () => {
         },
       });
       setProducts(response.data.content);
+      setIsLoading(false)
     } catch (err) {
       console.log(err);
       alert("Erro ao puxar produtos!");
@@ -41,6 +43,7 @@ const ListProduct = () => {
   }, []);
 
   const deleteProduct = async (product) => {
+    console.log(product.id)
     setProductNameShow(product.name);
     const confirmDelete = await new Promise((resolve) => {
       setShowModal(true);
@@ -60,11 +63,12 @@ const ListProduct = () => {
           Authorization: `Bearer ${JwtToken}`,
         },
       });
-      setIsLoading(false);
-      handleShowProducts();
+      handleShowProducts(); 
     } catch (err) {
-      setIsLoading(false);
+      console.error("Erro ao deletar produtos:", err);
       alert("Erro ao deletar produtos");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -76,11 +80,11 @@ const ListProduct = () => {
     products?.filter((product) => {
       const matchesSearch = product.name
         .toLowerCase()
-        .includes(searchProducts.toLowerCase()); // Filtro por nome, ele busca por nome e acresenta o filtro
+        .includes(searchProducts.toLowerCase()); 
       return matchesSearch;
     }) || [];
 
-  const maxProductsPerList = 6;
+  const maxProductsPerList = 9;
   let contProductPages = Math.ceil(
     filteredProducts.length / maxProductsPerList
   );
@@ -88,7 +92,7 @@ const ListProduct = () => {
   return (
     <>
       {isLoading && <LoadingSpin />}
-      <FormNewProduct dataProduct={productUpdate} />
+      <FormNewProduct dataProduct={productUpdate} onSubmitSuccess={handleShowProducts}/>
       <div className="contentListProducts">
         <div className="ListProducts">
           <div className="headerListProducts">

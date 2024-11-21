@@ -1,10 +1,10 @@
 import { BiEdit, BiAt, BiPhone, BiFileBlank  } from "react-icons/bi";
 
 import { MdDeleteOutline } from "react-icons/md";
-import ModalYesOrNot from "../../ModalYesOrNot/ModalYesOrNot.jsx"
 import { BiDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import ModalProduct from "../ModalProduct/ModalProduct";
 function PageOfListProducts({
   products,
   onEdit,
@@ -18,8 +18,9 @@ function PageOfListProducts({
 // }
 
   const [showModalDetails, setshowModalDetails] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState('');
 
+  const [selectedProduct, setSelectedProduct] = useState('');
+console.log(products)
   let productsToList = [];
 
   for (
@@ -34,13 +35,12 @@ function PageOfListProducts({
 
   return (
     <>
-      <ModalYesOrNot
-        show={showModalDetails}
-        onClose={() => setshowModalDetails(false)}
-        content={selectedProduct}
-        title="Detalhes Produto">
-      </ModalYesOrNot>
-
+      <ModalProduct
+      show={showModalDetails}
+      onClose={()=>setshowModalDetails(false)}
+      content={selectedProduct}
+      title={"Detalhes de "+selectedProduct.name}
+      />
 
       {productsToList.map((products) => (
         <tr key={products.id}>
