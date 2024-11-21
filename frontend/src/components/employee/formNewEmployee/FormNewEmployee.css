@@ -1,77 +1,80 @@
-.hide-desktop {
+.hideDesktopEmployee {
   display: none;
   text-decoration: none;
   color: black;
 }
 
-div.containerForm {
+div.containerFormEmployee {
   width: 80%;
   margin: 0 auto;
   margin-bottom: 2em;
 }
-h2.tabTitle {
+h2.tabTitleEmployee {
   text-align: left;
   margin-left: 15px;
   margin-block: 40px;
 }
 
-form.visibleformNewEmployee {
+form.visibleFormNewEmployee {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 60px;
   row-gap: 15px;
 }
 
-form.hiddenformNewEmployee {
+form.hiddenFormNewEmployee {
   display: none;
 }
 
-.line {
+.lineEmployee {
   grid-column: 1/3;
   display: flex;
   gap: inherit;
 }
-.fieldName {
+.fieldNameEmployee {
   flex-basis: calc(60% + 19px);
 }
 
-.fieldEmail {
+.fieldEmailEmployee {
   flex-basis: calc(40% - 19px);
 }
 
-.fieldDate {
-  flex-basis: 25%;
+.fieldDateEmployee {
+  flex-basis: 20%;
   flex-grow: 0.5;
   flex-shrink: 2;
 }
 
-.fieldPhone {
-  flex-basis: 35%;
+.fieldPhoneEmployee {
+  flex-basis: 40%;
 }
 
-.fieldCpf {
+.fieldCpfEmployee {
   flex-basis: 40%;
 }
 
 /* line3 */
-.fieldAddress {
+.fieldAddressEmployee {
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 60%;
 }
-.fieldAddressNumber {
+.fieldAddressNumberEmployee {
   flex-grow: 0;
   flex-shrink: 2;
   flex-basis: 20%;
 }
 
 /* line 4 e 5 */
-.fieldDistrict {
+.fieldDistrictEmployee {
   flex-basis: 25%;
 }
 
-.selectCity,
-.selectRole {
+#formNewEmployee .line4 {
+  justify-content: end !important;
+}
+
+.selectCityEmployee, .selectRoleEmployee {
   padding-inline: 15px;
   padding-block: 17px;
   width: 100%;
@@ -79,9 +82,6 @@ form.hiddenformNewEmployee {
   border: 1px solid var(--primary-dark);
   outline: 0;
   height: 60px;
-
-
-  
 
   /* Text */
   color: var(--text-100);
@@ -99,7 +99,7 @@ form.hiddenformNewEmployee {
 } */
 
 .selectCity,
-selectRole {
+.selectRoleEmployee {
   -webkit-appearance: none; /* Remove a aparência padrão no Chrome/Safari */
   -moz-appearance: none; /* Remove a aparência padrão no Firefox */
   appearance: none; /* Remove a aparência padrão */
@@ -108,38 +108,31 @@ selectRole {
   background-size: 2rem;
 }
 
-.divSelectCity {
+.divSelectCityEmployee {
   flex-basis: 25%;
 }
-.fieldCep {
+.fieldCepEmployee {
   flex-basis: 50%;
 }
 
-.divSelectRole {
-  flex-grow: 0.5;
+.divSelectRoleEmployee {
+  flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 25%;
 }
-.line5 {
+.line5Employee {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.roleAndStatus {
+.roleAndStatusEmployee {
   grid-column: 1/3;
   display: flex;
   justify-content: start;
   align-items: end;
   gap: 2rem;
 }
-.divButtons {
-  grid-column: 3/5;
-  display: flex;
-  justify-content: end;
-  gap: 1em;
-}
-
-.divButtons {
+.divButtonsEmployee {
   grid-column: 3/5;
   display: flex;
   justify-content: end;
@@ -150,7 +143,6 @@ selectRole {
   flex-basis: 35%;
   display: flex;
   flex-flow: column;
-  flex-direction: column;
   align-items: start;
 }
 #labelNewEmployeeStatus span {
@@ -158,7 +150,7 @@ selectRole {
   margin-bottom: 2px;
 }
 
-.isInvalid {
+.isInvalidEmployee {
   border-color: var(--system-danger);
   background-color: #fff2f2;
 }
@@ -169,12 +161,10 @@ selectRole {
   color: var(--text-40);
 }
 :-moz-placeholder {
-  /* Firefox 18- */
   color: var(--text-40);
 }
 
 ::-moz-placeholder {
-  /* Firefox 19+ */
   color: var(--text-40);
 }
 
@@ -183,55 +173,48 @@ selectRole {
 }
 
 @media (max-width: 768px) {
-  .hide-desktop {
+  .hideDesktopEmployee {
     display: block;
     margin-left: 0.05em;
   }
-  div.containerForm {
+  div.containerFormEmployee {
     width: 98%;
     margin: 0 auto;
   }
-  h2.tabTitle {
+  h2.tabTitleEmployee {
     text-align: center;
-    margin-left: none;
-    margin-block: none;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
   }
-  form.visibleformNewEmployee {
+  form.visibleFormNewEmployee {
     display: flex;
     flex-direction: column;
   }
 
-  form.hiddenformNewEmployee {
+  form.hiddenFormNewEmployee {
     display: none;
     flex-direction: column;
   }
 
-  .fieldAddress {
+  .fieldAddressEmployee {
     grid-column: 1/3;
   }
 
-  .divButtons {
+  .divButtonsEmployee {
     grid-column: 2/3;
     display: flex;
     justify-content: center;
     gap: 1em;
-    margin: none;
+    margin: 0;
   }
 
-  .isInvalid {
-    border-color: var(--system-danger);
-    background-color: #fff2f2;
-  }
-
-  .line {
+  .lineEmployee {
     grid-column: 1/3;
     display: flex;
     gap: inherit;
     flex-direction: column;
-    /* COLOCAR O FLEX-DIRECTION: COLUMN; PARA FORMATAR O MOBILE */
   }
 }

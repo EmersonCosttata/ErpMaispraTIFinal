@@ -31,6 +31,7 @@ form.hiddenformNewClient {
   display: flex;
   gap: inherit;
 }
+
 #formNewEmployee .line5 {
   justify-content: end;
 }
@@ -44,9 +45,10 @@ form.hiddenformNewClient {
 }
 
 .fieldDate {
-  flex-basis: 25%;
+  flex-basis: 35%;
   flex-grow: 0.5;
   flex-shrink: 2;
+  
 }
 
 .fieldPhone {
@@ -60,19 +62,23 @@ form.hiddenformNewClient {
   flex: 1;
   position: relative;
   gap: 5px;
-  bottom: 10px;
+  
   flex-basis: 40%;
 }
 
 .divIE {
   display: flex;
   flex-direction: column;
-  justify-content: END;
-  flex: 1;
-  position: relative;
-  gap: 5px;
+  justify-content: center;
+  align-items: start;
   bottom: 10px;
+  gap:1em;
   flex-basis: 40%;
+margin-top: 2.2em;
+}
+
+#formNewClient .line2 .fieldDate, #formNewClient .line2 .fieldPhone{
+  margin-top: 8px;
 }
 
 /* line3 */
@@ -136,9 +142,11 @@ form.hiddenformNewClient {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  
 }
 #labelNewClientStatus {
   flex-basis: 35%;
+  
   display: flex;
   flex-flow: column;
   flex-direction: column;

@@ -1,10 +1,11 @@
 import { BiEdit } from "react-icons/bi";
-
+import { CiDeliveryTruck } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import ModalDetails from "../ModalSale/ModalSale";
 import { BiDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import ModalDelivery from "../ModalDelivery/ModalDelivery";
 function PageOfListSaleRegisters({
   SaleRegisters,
   onEdit,
@@ -13,6 +14,7 @@ function PageOfListSaleRegisters({
   listSaleRegistersPageSelected,
 }) {
   const [showModalDetails, setshowModalDetails] = useState(false);
+  const [showModalDelivery, setshowModalDelivery] = useState(false);
   const [selectedsaleRegister, setSelectedsaleRegister] = useState("");
   let SaleRegistersToList = ["2"];
 
@@ -20,7 +22,7 @@ function PageOfListSaleRegisters({
     if (dataString) {
       const data = new Date(dataString);
       const dia = String(data.getDate()).padStart(2, "0");
-      const mes = String(data.getMonth() + 1).padStart(2, "0"); // Mês começa do 0
+      const mes = String(data.getMonth() + 1).padStart(2, "0"); 
       const ano = data.getFullYear();
       const horas = String(data.getHours()).padStart(2, "0");
       return `${dia}/${mes}/${ano}`;
@@ -48,6 +50,13 @@ function PageOfListSaleRegisters({
         title="Detalhes Registro da Venda"
       ></ModalDetails>
 
+
+      <ModalDelivery 
+       show={showModalDelivery}
+       onClose={() => setshowModalDelivery(false)}
+       content={selectedsaleRegister}
+      />
+
       {SaleRegisters &&
         SaleRegisters.map((saleRegister) => (
           <tr key={saleRegister.id}>
@@ -60,15 +69,13 @@ function PageOfListSaleRegisters({
               {formatarDataBR(saleRegister.saleDate)}
             </td>
             <td className="td-cpfCnpj">
-              {formatarDataBR(saleRegister.saleDelivery)}
+              {saleRegister.saleDelivery ? formatarDataBR(saleRegister.saleDelivery) : "Aguardando Entrega"}
             </td>
-            <td className="td-editLine">
-              <Link
-                onClick={() => {
-                  setSelectedsaleRegister(saleRegister);
-                  setshowModalDetails(true);
-                }}
-              >
+            <td className="td-editLine"> 
+              {saleRegister.saleStatus ? <Link onClick={() => { setSelectedsaleRegister(saleRegister);  setshowModalDelivery(true)}}>
+              <CiDeliveryTruck  className="DeliveryLine" size={30} />
+              </Link> : ''}
+              <Link onClick={() => { setSelectedsaleRegister(saleRegister);  setshowModalDetails(true);  }}>
                 <BiDetail className="editLine" size={30} />
               </Link>
               <a href="#" onClick={() => onEdit(saleRegister)}>
@@ -77,6 +84,7 @@ function PageOfListSaleRegisters({
               <Link onClick={() => onDelete(saleRegister)}>
                 <MdDeleteOutline className="deleteLine" size={30} />
               </Link>
+             
             </td>
           </tr>
         ))}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./formNewClient.css";
+import "./FormNewClient.css";
 import { CgAdd, CgRemove } from "react-icons/cg";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
@@ -281,7 +281,7 @@ function FormNewClient( { dataClient, onSubmitSuccess }) {
       
       setIsLoading(true);
       
-      if (cnpjRegex.test(newSupplierData.cpfCnpj)) {
+      if (cnpjRegex.test(newClientData.cpfCnpj)) {
         setError(null);
       } else {
         setIsLoading(false);

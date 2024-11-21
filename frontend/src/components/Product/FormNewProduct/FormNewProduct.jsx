@@ -9,7 +9,7 @@ import TextareaField from "../../TextareaField/TextareaField";
 import LoadingSpin from '../../LoadingSpin/LoadingSpin'
 import SelectFieldSupplier from "../../SelectField/SelectFieldSupplier";
 
-function FormNewProduct(dataProduct) {
+function FormNewProduct({dataProduct, onSubmitSuccess }) {
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const [ResponsiveProduct, setResponsiveProduct] = useState(true);
@@ -20,12 +20,12 @@ function FormNewProduct(dataProduct) {
   const [newProductStock, setNewProductStock] = useState("");
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newUnitofMeasurement, setNewUnitofMeasurement] = useState("");
-  const [newProductReservedStock, setNewProductReservedStock] = useState("");
-  const [newProductIncomingStock, setNewProductIncomingStock] = useState("");
-  const [newProducSupplier, setNewProductSupplier] = useState();
+  const [newProductReservedStock, setNewProductReservedStock] = useState(0);
+  const [newProductIncomingStock, setNewProductIncomingStock] = useState(0);
+  const [newProducSupplier, setNewProductSupplier] = useState([]);
   const [newProductAvailableForSale, setNewProductAvailableForSale] = useState("");
   const [newProductSupplierCode, setNewProductSupplierCode] = useState("");
- 
+
   const [ListSupplier, setListSupplier] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [updateProductId, setUpdateProductId] = useState();
@@ -34,11 +34,7 @@ function FormNewProduct(dataProduct) {
 
   const { JwtToken } = useAuth();
 
-
-
-
-
-  const CheckStock = (stock)=> {
+  const CheckStock = (stock) => {
     if (stock >= 0) {
       setError(null);
     } else {
@@ -58,15 +54,14 @@ function FormNewProduct(dataProduct) {
     }
   };
 
-
-
   const handleReset = () => {
     let form = document.getElementById("formNewProduct");
     let elements = form.getElementsByClassName("isInvalid");
-
     while (elements.length > 0) {
       elements[0].classList.remove("isInvalid");
     }
+    setError('')
+    setSuccess('')
     setNewProductName("");
     setNewProductPrice("");
     setNewUnitofMeasurement("");
@@ -74,7 +69,8 @@ function FormNewProduct(dataProduct) {
     setNewProductReservedStock("");
     setNewProductIncomingStock("");
     setNewProductDescription("");
-    setNewProductSupplier("")
+    setNewProductSupplier([])
+    setNewProductSupplierCode("")
     setNewProductAvailableForSale("")
     SetPostToUpdade(true);
     setError(null);
@@ -86,18 +82,27 @@ function FormNewProduct(dataProduct) {
       supplierCode: newProductSupplierCode,
       name: newProductName,
       description: newProductDescription,
-      unitofMeasure: newUnitofMeasurement,
+      unitOfMeasure: newUnitofMeasurement,
       productPrice: newProductPrice,
       stock: newProductStock,
       availableForSale: newProductAvailableForSale,
-      supplier: newProducSupplier
-      
+      suppliers: [
+        {
+          id: +newProducSupplier.id, 
+          fullName: newProducSupplier.fullName, 
+        },
+      ],
     };
-    console.log(newProductData)
+  
+    console.log(newProductData);
+  
+    // Validação do formulário
     if (!document.getElementById("formNewProduct").reportValidity()) {
       setError("Preencha todos os campos!");
+      setIsLoading(false);
       return;
     }
+  
     try {
       const response = await axios.post(
         `${apiUrl}/api/produtos`,
@@ -111,39 +116,43 @@ function FormNewProduct(dataProduct) {
       );
       handleReset();
       setSuccess("Produto adicionado com sucesso!");
-      setIsLoading(false);
-      window.location.reload;
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (err) {
+      console.error("Erro ao adicionar produto", err);
+      setError(err.response?.data?.message || "Erro ao adicionar produto");
+    } finally {
       setIsLoading(false);
-      console.error(newProductData.name);
-      setIsLoading(false);
-      setError(`${err.response.data.message}`);
-
     }
-  }
-
+  };
+  
   const handleUpdate = async (event) => {
-    setIsLoading(true)
-
     event.preventDefault();
     const newProductData = {
       supplierCode: newProductSupplierCode,
       name: newProductName,
       description: newProductDescription,
-      unitofMeasure: newUnitofMeasurement,
+      unitOfMeasure: newUnitofMeasurement,
       productPrice: newProductPrice,
       stock: newProductStock,
       availableForSale: newProductAvailableForSale,
       reservedStock: newProductReservedStock,
       incomingStock: newProductIncomingStock,
-      supplier: newProducSupplier
-      
-      }
-
+      suppliers: [
+        {
+          id: +newProducSupplier.id, 
+          fullName: newProducSupplier.fullName, 
+        },
+      ],
+    };
+  
     if (!document.getElementById("formNewProduct").reportValidity()) {
       setError("Preencha todos os campos!");
       return;
     }
+  
+    setIsLoading(true); 
     try {
       const response = await axios.put(
         `${apiUrl}/api/produtos/${updateProductId}`,
@@ -157,27 +166,27 @@ function FormNewProduct(dataProduct) {
       );
       handleReset();
       setSuccess("Produto Atualizado com sucesso!");
-      setIsLoading(!isLoading)
-      setError(null);
-      SetPostToUpdade(true)
-      window.location.reload()
-    } catch (err) {
-      setIsLoading(!isLoading);
-      if (err.response && err.response.data) {
-        setError(`${err.response.data.message}`);
-      } else {
-        setError("Erro ao atualizar Produto! Tente novamente.");
-        setSuccess(null);
+      SetPostToUpdade(true); // Flag para indicar que a atualização foi bem-sucedida
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
       }
+    } catch (err) {
+      console.error("Erro ao atualizar produto", err);
+      setError(err.response?.data?.message || "Erro ao atualizar produto! Tente novamente.");
+      setSuccess(null);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Desativa o carregamento
     }
   };
+  
 
   const resposiveProducteShow = () => {
     setResponsiveProduct(!ResponsiveProduct);
   };
   const SetValuestoUpdate = (values) => {
+    console.log('setPost',values.suppliers )
+    setError('')
+    setSuccess('')
     setUpdateProductId(values.id)
     setNewProductSupplierCode(values.supplierCode)
     setNewProductAvailableForSale(values.availableForSale)
@@ -186,36 +195,35 @@ function FormNewProduct(dataProduct) {
     setNewProductStock(values.stock);
     setNewUnitofMeasurement(values.unitOfMeasure);
     setNewProductDescription(values.description)
-    setNewProductSupplier(values.supplier)
+    setNewProductSupplier({ suppliersFullName: values.suppliers[0]});
+    
     setNewProductIncomingStock(values.incomingStock)
     setNewProductReservedStock(values.reservedStock)
   };
 
   useEffect(() => {
-    if (dataProduct.dataProduct) {
-      SetValuestoUpdate(dataProduct.dataProduct);
+    if (dataProduct) {
+      SetValuestoUpdate(dataProduct);
       SetPostToUpdade(false);
     }
   }, [dataProduct]);
 
   const handleGetSupplier = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/suplier`, {
+      const response = await axios.get(`${apiUrl}/api/fornecedores`, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
         },
       });
-      console.log(response.data)
-      setListSupplier(response.data.content.id);
+      setListSupplier(response.data.content);
     } catch (err) {
-      console.error("Erro ao puxar produtos", err);
+      console.error("Erro ao puxar forncedores", err);
     }
   };
 
   useEffect(() => {
     handleGetSupplier();
   }, []);
-
   return (
     <div className="containerForm">
       <h2 className="tabTitle">
@@ -233,12 +241,12 @@ function FormNewProduct(dataProduct) {
         onSubmit={PostToUpdate ? handleSubmit : handleUpdate}
       >
         <div className="line1 line">
-        <InputField
+          <InputField
             label={"Código do Produto:"}
             placeholder={"Digite o código do Produto"}
             name={"codigoDoProduto"}
             idInput={"newProductSupplierCode"}
-            classNameDiv="fiedSupplierCode"
+            classNameDiv="fieldSupplierCode"
             value={newProductSupplierCode}
             onChange={(e) => {
               setNewProductSupplierCode(e.target.value);
@@ -306,14 +314,16 @@ function FormNewProduct(dataProduct) {
             onInvalid={(e) => isInvalid(e)}
           />
           <SelectFieldSupplier
-          label={"Fornecedor"}
-          placeholder="Fornecedor"
-          arrayOptions={ListSupplier}
-          value={newProducSupplier}
-          onChangeValue={setNewProductSupplier}
-        />
+            label={"Fornecedor"}
+            placeholder="Fornecedor"
+            arrayOptions={ListSupplier}
+            value={newProducSupplier}
+            onChangeValue={setNewProductSupplier}
+            classNameDiv="fieldSupplier"
+            onInvalid={(e) => isInvalid(e)}
+          />
 
-          
+
         </div>
 
         <div className="line3 line">
@@ -331,27 +341,35 @@ function FormNewProduct(dataProduct) {
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
+        
 
-        <div className="errorsOrSuccess">
-          <p style={{ color: "red" }}>{Error && Error}</p>
-          <p style={{ color: "green" }}>{Success && Success}</p>
+
+        <div className="line line5">
+          <div className="divStatusAndButtons">
+
+            <div className="errorsOrSuccess">
+              <p style={{ color: "red" }}>{Error && Error}</p>
+              <p style={{ color: "green" }}>{Success && Success}</p>
+            </div>
+            <div className="divButtons">
+              <button
+                type="submit"
+                className="primaryNormal"
+                onClick={PostToUpdate ? handleSubmit : handleUpdate}
+              >
+                {PostToUpdate ? "Salvar" : "Atualizar"}
+              </button>
+              <button
+                type="reset"
+                className="primaryLight"
+                onClick={() => handleReset()}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="divButtons">
-          <button
-            type="submit"
-            className="primaryNormal"
-            onClick={PostToUpdate ? handleSubmit : handleUpdate}
-          >
-            {PostToUpdate ? "Salvar" : "Atualizar"}
-          </button>
-          <button
-            type="reset"
-            className="primaryLight"
-            onClick={() => handleReset()}
-          >
-            Cancelar
-          </button>
-        </div>
+
       </form >
       {isLoading && <LoadingSpin />}
     </div >

@@ -96,7 +96,7 @@ function FormNewEmployee({ dataEmployee, onSubmitSuccess }) {
     }
   };
 
-const CheckCpf = (cpf) => {
+  const CheckCpf = (cpf) => {
     const cpfRegex =
       /^(?!.*(\d)(?:-?\1){10})\d{3}\.\d{3}\.\d{3}-\d{2}$|^(\d{11})$/;
     if (cpfRegex.test(cpf)) {
@@ -131,7 +131,6 @@ const CheckCpf = (cpf) => {
     setError(null);
   };
 
-
   const handleSubmit = async (event) => {
     setIsLoading(true);
     event.preventDefault();
@@ -164,7 +163,7 @@ const CheckCpf = (cpf) => {
         }
       );
       setSuccess("Usuário adicionado com sucesso!");
-      setIsLoading(false);  
+      setIsLoading(false);
       handleReset();
       if (onSubmitSuccess) {
         onSubmitSuccess();
@@ -208,7 +207,7 @@ const CheckCpf = (cpf) => {
   const handleUpdate = async (event) => {
     setIsLoading(true);
     event.preventDefault();
-    
+
     const newEmployeeData = {
       fullName: newEmployeeName,
       email: newEmployeeEmail,
@@ -253,7 +252,7 @@ const CheckCpf = (cpf) => {
         onSubmitSuccess();
       }
       setError(null);
-      SetPostToUpdade(true); 
+      SetPostToUpdade(true);
       handleReset();
     } catch (err) {
       setIsLoading(false);
@@ -275,11 +274,11 @@ const CheckCpf = (cpf) => {
   }, [dataEmployee]);
 
   return (
-    <div className="containerForm">
+    <div className="containerFormEmployee">
       {isLoading && <LoadingSpin />}
-      <h2 className="tabTitle">
+      <h2 className="tabTitleEmployee">
         Adicionar Usuario
-        <a className="hide-desktop" onClick={resposiveEmployeeShow}>
+        <a className="hideDesktopEmployee" onClick={resposiveEmployeeShow}>
           {" "}
           {!ResponsiveEmployee ? <CgAdd size={45} /> : <CgRemove size={45} />}
         </a>
@@ -287,20 +286,20 @@ const CheckCpf = (cpf) => {
       <form
         className={
           ResponsiveEmployee
-            ? "visibleformNewEmployee"
-            : "hiddenformNewEmployee"
+            ? "visibleFormNewEmployee"
+            : "hiddenFormNewEmployee"
         }
         id="formNewEmployee"
         onSubmit={PostToUpdate ? handleSubmit : handleUpdate}
         onReset={handleReset}
       >
-        <div className="line1 line">
+        <div className="line1Employee lineEmployee">
           <InputField
             label={"Nome:"}
             placeholder={"Digite o nome do usuário"}
             name={"nome"}
             idInput={"newEmployeeName"}
-            classNameDiv={"fieldName"}
+            classNameDiv={"fieldNameEmployee"}
             value={newEmployeeName}
             onChange={(e) => {
               setNewEmployeeName(e.target.value);
@@ -313,7 +312,7 @@ const CheckCpf = (cpf) => {
             placeholder={"Digite o e-mail do usuário"}
             name={"email"}
             idInput={"newEmployeeEmail"}
-            classNameDiv="fieldEmail"
+            classNameDiv="fieldEmailEmployee"
             type={"email"}
             value={newEmployeeEmail}
             onChange={(e) => {
@@ -324,12 +323,12 @@ const CheckCpf = (cpf) => {
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
-        <div className="line2 line">
+        <div className="line2Employee lineEmployee">
           <InputField
             label={"Data de Nascimento:"}
             name={"dataNascimento"}
             idInput={"newEmployeeBirthDate"}
-            classNameDiv="fieldDate"
+            classNameDiv="fieldDateEmployee"
             type={"date"}
             value={newEmployeeBirthDate}
             onChange={(e) => {
@@ -338,13 +337,12 @@ const CheckCpf = (cpf) => {
             }}
             onInvalid={(e) => isInvalid(e)}
           />
-
           <InputField
             label={"Telefone:"}
             placeholder={"Digite o telefone do usuário"}
             name={"telefone"}
             idInput={"newEmployeePhone"}
-            classNameDiv="fieldPhone"
+            classNameDiv="fieldPhoneEmployee"
             type={"tel"}
             value={newEmployeePhone}
             onChange={(e) => {
@@ -359,26 +357,24 @@ const CheckCpf = (cpf) => {
             placeholder={"Digite o CPF do usuário"}
             name={"cpf"}
             idInput={"newEmployeeCPF"}
-            classNameDiv="fieldCpf"
+            classNameDiv="fieldCpfEmployee"
             type={"text"}
             value={newEmployeeCPF}
             onChange={(e) => {
               setNewEmployeeCPF(e.target.value);
-              console.log(e.target.value)
               isValid(e);
               CheckCpf(e.target.value);
             }}
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
-
-        <div className="line3 line">
+        <div className="line3Employee lineEmployee">
           <InputField
             label={"CEP:"}
             name={"CEP"}
             placeholder={"00000-000"}
             idInput={"newEmployeeCEP"}
-            classNameDiv={"fieldCep"}
+            classNameDiv={"fieldCepEmployee"}
             type={"text"}
             value={newEmployeeCEP}
             onChange={(e) => {
@@ -387,13 +383,41 @@ const CheckCpf = (cpf) => {
             }}
             onInvalid={(e) => isInvalid(e)}
           />
-
+          <InputField
+            label={"Cidade:"}
+            name={"cidade"}
+            placeholder={"Digite a cidade do usuário"}
+            idInput={"newEmployeeCity"}
+            classNameDiv={"divSelectCityEmployee"}
+            value={newEmployeeCity}
+            onInvalid={(e) => isInvalid(e)}
+            onChange={(e) => {
+              setNewEmployeeCity(e.target.value);
+              isValid(e);
+            }}
+          />
+          <InputField
+            label={"Bairro:"}
+            name={"bairro"}
+            placeholder={"Digite o bairro do usuário"}
+            idInput={"newEmployeeDistrict"}
+            classNameDiv="fieldDistrictEmployee"
+            type={"text"}
+            value={newEmployeeDistrict}
+            onChange={(e) => {
+              setNewEmployeeDistrict(e.target.value);
+              isValid(e);
+            }}
+            onInvalid={(e) => isInvalid(e)}
+          />
+        </div>
+        <div className="line4Employee lineEmployee">
           <InputField
             label={"Logradouro:"}
             name={"logradouro"}
             placeholder={"Digite o endereço do usuário"}
             idInput={"newEmployeeAddress"}
-            classNameDiv={"fieldAddress"}
+            classNameDiv={"fieldAddressEmployee"}
             type={"text"}
             value={newEmployeeAddress}
             onChange={(e) => {
@@ -407,7 +431,7 @@ const CheckCpf = (cpf) => {
             name={"numero"}
             placeholder={"0000"}
             idInput={"newEmployeeAddressNumber"}
-            classNameDiv={"fieldAddressNumber"}
+            classNameDiv={"fieldAddressNumberEmployee"}
             type={"text"}
             value={newEmployeeAddressNumber}
             onChange={(e) => {
@@ -417,67 +441,35 @@ const CheckCpf = (cpf) => {
             onInvalid={(e) => isInvalid(e)}
           />
         </div>
-
-        <div className="line4 line">
-          <InputField
-            label={"Bairro:"}
-            name={"bairro"}
-            placeholder={"Digite o bairro do usuário"}
-            idInput={"newEmployeeDistrict"}
-            classNameDiv="fieldDistrict"
-            type={"text"}
-            value={newEmployeeDistrict}
-            onChange={(e) => {
-              setNewEmployeeDistrict(e.target.value);
-              isValid(e);
-            }}
-            onInvalid={(e) => isInvalid(e)}
-          />
-
-          <InputField
-            label={"Cidade:"}
-            name={"cidade"}
-            placeholder={"Digite a cidade do usuário"}
-            idInput={"newEmployeeCity"}
-            classNameDiv={"divSelectCity"}
-            value={newEmployeeCity}
-            onInvalid={(e) => isInvalid(e)}
-            onChange={(e) => {
-              setNewEmployeeCity(e.target.value);
-              isValid(e);
-            }}
-          />
-          <SelectField
-            label={"Cargo:"}
-            name={"cargo"}
-            id={"newEmployeeRole"}
-            classnameDiv={"divSelectRole"}
-            classNameSelect={"selectRole"}
-            value={newEmployeeRole ? JSON.stringify(newEmployeeRole[0]) : ""}
-            onInvalid={(e) => selectIsInvalid(e)}
-            onChange={(e) => {
-              const selectedRole = JSON.parse(e.target.value);
-              setNewEmployeeRole([selectedRole]);
-              isValid(e);
-            }}
-            arrayOptions={roleList}
-          />
-        </div>
-
-        <div className="line5 line">
-          <div className="divStatusAndButtons">
-            <div className="divStatus">
+        <div className="line5Employee lineEmployee">
+          <div className="roleAndStatusEmployee">
+            <SelectField
+              label={"Cargo:"}
+              name={"cargo"}
+              id={"newEmployeeRole"}
+              classnameDiv={"divSelectRoleEmployee"}
+              classNameSelect={"selectRoleEmployee"}
+              value={newEmployeeRole ? JSON.stringify(newEmployeeRole[0]) : ""}
+              onInvalid={(e) => selectIsInvalid(e)}
+              onChange={(e) => {
+                const selectedRole = JSON.parse(e.target.value);
+                setNewEmployeeRole([selectedRole]);
+                isValid(e);
+              }}
+              arrayOptions={roleList}
+            />
+            <div className="divStatusEmployee">
               <label
                 htmlFor="newEmployeeStatus"
-                className="inputLabel"
+                className="inputLabelEmployee"
                 id="labelNewEmployeeStatus"
               >
-                <span className="inputDescription">Status:</span>
-                <div className="divRadios">
+                <span className="inputDescriptionEmployee">Status:</span>
+                <div className="divRadiosEmployee">
                   <RadioGroup
                     name={"ativoInativo"}
                     options={statusOptions}
-                    defaultValue={newEmployeeStatus}
+                    defaultValue={"ativo"}
                     onChange={(selectedValue) =>
                       setNewEmployeeStatus(selectedValue)
                     }
@@ -485,26 +477,26 @@ const CheckCpf = (cpf) => {
                 </div>
               </label>
             </div>
-            <div className="errorsOrSuccess">
-              <p style={{ color: "red" }}>{Error && Error}</p>
-              <p style={{ color: "green" }}>{Success && Success}</p>
-            </div>
-            <div className="divButtons">
-              <button
-                type="submit"
-                className="primaryNormal"
-                onClick={PostToUpdate ? handleSubmit : handleUpdate}
-              >
-                {PostToUpdate ? "Salvar" : "Atualizar"}
-              </button>
-              <button
-                type="reset"
-                className="primaryLight"
-                onClick={() => handleReset()}
-              >
-                Cancelar
-              </button>
-            </div>
+          </div>
+          <div className="errorsOrSuccessEmployee">
+            <p style={{ color: "red" }}>{Error && Error}</p>
+            <p style={{ color: "green" }}>{Success && Success}</p>
+          </div>
+          <div className="divButtonsEmployee">
+            <button
+              type="submit"
+              className="primaryNormal"
+              onClick={PostToUpdate ? handleSubmit : handleUpdate}
+            >
+              {PostToUpdate ? "Salvar" : "Atualizar"}
+            </button>
+            <button
+              type="reset"
+              className="primaryLight"
+              onClick={() => handleReset()}
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </form>

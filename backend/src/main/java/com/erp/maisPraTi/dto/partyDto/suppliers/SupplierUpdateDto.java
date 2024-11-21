@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,6 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 public class SupplierUpdateDto extends PartyDto {
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
 }

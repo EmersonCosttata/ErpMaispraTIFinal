@@ -1,7 +1,6 @@
+import "./ModalYesOrNot.css";
 
-import "./ModalYesOrNot.css"; 
-
-function ModalYesOrNot({ show, onClose, title, children }) {
+function ModalYesOrNot({ show, onClose, title, deleteItem, onConfirm }) {
   if (!show) return null;
 
   return (
@@ -10,14 +9,20 @@ function ModalYesOrNot({ show, onClose, title, children }) {
         <div className="modal-header">
           <h2>{title}</h2>
         </div>
-        <div className="modal-body">{children}</div>
+        <div className="modal-body">
+          <h6>{`Confirma Exclusão de ${deleteItem}?`}</h6>
+        </div>
         <div className="modal-footer">
-          <button className="close-button" onClick={onClose}>
-            Fechar
+          <button className="confirm-button" onClick={onConfirm}>
+            Sim
+          </button>
+          <button className="cancel-button" onClick={onClose}>
+            Não
           </button>
         </div>
       </div>
     </div>
   );
 }
-export default ModalYesOrNot
+
+export default ModalYesOrNot;

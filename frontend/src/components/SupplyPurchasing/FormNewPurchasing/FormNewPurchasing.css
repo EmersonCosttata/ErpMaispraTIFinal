@@ -32,26 +32,25 @@ form.hiddenformNewPurchasing {
   gap: inherit;
 }
 
-.fieldProduct {
+#visibleformNewPurchasing .fieldProduct {
   flex-basis: 50%;
 }
-.fieldQte {
+#visibleformNewPurchasing .fieldQte {
   flex-basis: 20%;
 }
-.fieldDeliveryDate {
-  flex-basis: 15%;
+#visibleformNewPurchasing .fieldDeliveryDate {
+  
+  flex-shrink: 1;
+  min-width: 0;
 }
-.fieldExpectedDate {
-  flex-basis: 15%;
+#visibleformNewPurchasing .fieldExpectedDate {
+  
+  flex-shrink: 1;
+  min-width: 0 !important;
 }
 
-/*line2*/
 .line2 {
-  min-height: 10rem;
-}
-
-.line2Left {
-  flex-basis: 50%;
+  flex-basis: 100%;
   display: flex;
 
   gap: 60px;
@@ -69,16 +68,20 @@ form.hiddenformNewPurchasing {
   flex-basis: 50%;
 }
 .divStatusAndButtons {
-  flex-basis: 50%;
+  grid-column: 4/5;
   display: flex;
-  justify-content: end;
-  gap: 1em;
+  flex-direction: column;
+  gap: 30px;
 }
 .divButtons {
   display: flex;
   justify-content: end;
   gap: 1em;
   margin: none;
+}
+
+.line5 {
+  justify-content: end;
 }
 
 .selectEmployee,

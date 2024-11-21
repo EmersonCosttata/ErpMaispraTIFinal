@@ -2,7 +2,6 @@ import "./ModalEmployee.css";
 
 function ModalDetails({ show, onClose, content, title }) {
   if (!show) return null;
-  console.log(content);
   let formatedRoles, formatedBDate;
   if (content) {
     formatedRoles = content.roles

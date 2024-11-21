@@ -137,9 +137,7 @@ public class SaleItemService {
             productService.updateDeletedItemToSaleItems(saleItem.getProduct().getId(), saleItem.getQuantitySold());
             saleItemRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Não foi possível excluir esta item. Ele pode estar vinculado a outros registros.");
-        } catch (Exception e) {
-            throw new DatabaseException("Erro inesperado ao tentar excluir este item.");
+            throw new DatabaseException("Não foi possível excluir este item. Ele pode estar vinculado a outros registros.");
         }
     }
 

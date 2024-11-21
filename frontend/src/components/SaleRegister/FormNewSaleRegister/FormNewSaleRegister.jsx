@@ -23,7 +23,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [ListClients, setListClients] = useState([]);
   const [ListProducts, setListProducts] = useState([]);
 
-  const [NewSaleRegisterClientId, setNewSaleRegisterClientId] = useState('');
+  const [NewSaleRegisterSaleId, setNewSaleRegisterSaleId] = useState('');
   const [NewSaleRegisterClient, setNewSaleRegisterClient] = useState('');
   const [NewSaleRegisterSaller, setNewSaleRegisterSaller] = useState(decoded.fullName);
   const [NewSaleRegisterData, setNewSaleRegisterData] = useState('');
@@ -34,12 +34,13 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [cardId, setCardId] = useState(1);
 
   const ValuestoUpdate = (values) => {
+
     setCardItems([]);
-    setNewSaleRegisterClientId(values.id);
+    setNewSaleRegisterSaleId(values.id);
     setNewSaleRegisterClient(values.client);
     setNewSaleRegisterSaller(decoded.fullName);
     setNewSaleRegisterDataPrev(values.expectedDeliveryDate);
-    setNewSaleRegisterData('');
+    setNewSaleRegisterData(values.saleDate);
     setNewSaleRegisterProduct('');
     setNewSaleRegisterQuant('');
     setCardId(1);
@@ -77,27 +78,28 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       );
 
       const clientData = response.data;
-
-      const saleRequests = CardItems.map((card) =>
-        axios.post(
-          `${apiUrl}/api/vendas/${clientData.id}/itens`,
-          {
-            productId: card.productId,
-            quantitySold: card.quant,
-            salePrice: card.price,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${JwtToken}`,
-              "Content-Type": "application/json",
+              
+        const saleRequests = CardItems.map((card) =>
+          axios.post(
+            `${apiUrl}/api/vendas/${clientData.id}/itens`,
+            {
+              productId: +card.productId,     
+              quantitySold: +card.quant,       
+              salePrice: +card.price,         
             },
-          }
-        )
-      );
+            {
+              headers: {
+                Authorization: `Bearer ${JwtToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+        );
       await Promise.all(saleRequests);
       setSuccess("Venda registrada com sucesso!");
       handleReset();
     } catch (err) {
+      console.log(err)
       setError("Erro ao registrar itens de venda");
       if (err.response && err.response.data) {
         setError(`${err.response.data.message}`);
@@ -110,22 +112,15 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const handleUpdate = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-
     const salePayload = {
-      saleDate: NewSaleRegisterData,
-      expectedDeliveryDate: NewSaleRegisterDataPrev,
-      // saleItems: CardItems.map((card) => ({
-      //   productId: card.productId,
-      //   quantitySold: card.quant,
-      //   salePrice: card.price,
-      // })),
-      saleItems: [],
+      saleDate: NewSaleRegisterData, 
+      expectedDeliveryDate: NewSaleRegisterDataPrev, 
       saleStatus: "pendente",
     };
-    console.log("Payload:", salePayload);
-
+  
     try {
-      const response = await axios.put(`${apiUrl}/api/vendas/${NewSaleRegisterClientId}`,
+      const response = await axios.put(
+        `${apiUrl}/api/vendas/${NewSaleRegisterSaleId}`,
         salePayload,
         {
           headers: {
@@ -134,22 +129,46 @@ function FormNewSaleRegister({ dataSaleRegister }) {
           },
         }
       );
-      console.log(response)
-      setSuccess("Venda Atualizada com sucesso!");
+  
+      console.log("Venda atualizada:", response.data.saleItems[0].id);
+      let updatedSaleIdList = response.data.saleItems.map((item) => item.id);
+      Console.log(updatedSaleIdList)
+      const saleRequestsUpdate = CardItems.map((card, index) =>
+        axios.put(
+          `${apiUrl}/api/vendas/itens/${updatedSaleIdList[index]}`, 
+          {
+            productId: +card.productId,
+            quantitySold: +card.quant,
+            salePrice: +card.price,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${JwtToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+      );
+  
+      await Promise.all(saleRequestsUpdate);
+      setSuccess("Venda e itens atualizados com sucesso!");
       handleReset();
     } catch (err) {
-      setError("Erro ao Atualizar itens de venda");
-      console.log("Erro:", err);
+      console.error("Erro ao atualizar venda:", err);
+      setError("Erro ao atualizar itens de venda.");
+  
       if (err.response && err.response.data) {
-        setError(`${err.response.data.message}`);
+        setError(err.response.data.message || "Erro desconhecido.");
       }
     } finally {
       setIsLoading(false);
     }
   };
+  
 
 
   const deleteCardItem = (idToDelete) => {
+    setIsLoading(true)
     setCardItems((prevItems) => prevItems.filter(item => item.id !== idToDelete));
     setCardId(cardId - 1);
     setCardItems((prevItems) => {
@@ -160,7 +179,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
           if (prod.id === itemToDelete.productId) {
             return {
               ...prod,
-              availableForSale: Number(prod.availableForSale) + Number(itemToDelete.quant), 
+              availableForSale: Number(prod.availableForSale) + Number(itemToDelete.quant),
             };
           }
           return prod;
@@ -169,57 +188,88 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       return prevItems.filter(item => item.id !== idToDelete);
     });
     setCardId((prevId) => prevId - 1);
+    setIsLoading(!true)
   };
-  
 
   const handleAddtoCard = (e) => {
+    setIsLoading(true)
     e.preventDefault();
+    if (!NewSaleRegisterProduct || NewSaleRegisterProduct.length === 0) {
+      setError("Nenhum produto foi selecionado.");
+      return;
+    }
+    const selectedProduct = NewSaleRegisterProduct[0];
     const NewItemtoCard = {
       id: cardId,
-      productId: NewSaleRegisterProduct[0].id,
-      productName: NewSaleRegisterProduct[0].name,
+      productId: selectedProduct.id,
+      productName: selectedProduct.name,
       quant: NewSaleRegisterQuant,
-      price: NewSaleRegisterProduct[0].productPrice,
-      subtotal: NewSaleRegisterProduct[0].productPrice * NewSaleRegisterQuant,
+      price: selectedProduct.productPrice,
+      subtotal: +selectedProduct.productPrice * +NewSaleRegisterQuant,
     };
+
   
-    if (NewSaleRegisterQuant > NewSaleRegisterProduct[0].availableForSale) {
+    if (+NewSaleRegisterQuant > +selectedProduct.availableForSale) {
+
       setError(
-        NewSaleRegisterProduct[0].availableForSale === 0
+        +selectedProduct.availableForSale === 0
           ? "Produto sem estoque disponível!"
           : "Quantidade maior que o estoque disponível!"
       );
       return;
     }
-  
+
     if (!NewItemtoCard.quant || isNaN(NewItemtoCard.quant) || NewItemtoCard.quant <= 0) {
       setError("A quantidade deve ser preenchida e ser um número positivo.");
       return;
     }
-  
+
     if (!NewItemtoCard.price || isNaN(NewItemtoCard.price) || NewItemtoCard.price <= 0) {
       setError("O preço deve ser preenchido e ser um número positivo.");
       return;
     }
-
+  
     const updatedProducts = ListProducts.map((prod) => {
-      if (prod.id === NewSaleRegisterProduct[0].id) {
+      if (prod.id === selectedProduct.id) {
+        if (+prod.availableForSale < +NewItemtoCard.quant) {
+          setError("Estoque insuficiente para adicionar essa quantidade.");
+          throw new Error("Estoque insuficiente");
+        }
         return {
           ...prod,
-          availableForSale: prod.availableForSale - NewSaleRegisterQuant,
+          availableForSale: +prod.availableForSale - +NewItemtoCard.quant,
         };
       }
       return prod;
     });
+    console.log("Estoque após atualização:", updatedProducts);
     setListProducts(updatedProducts);
-    setCardItems((prevItems) => [...prevItems, NewItemtoCard]);
-    setCardId(cardId + 1);
+  
+    setCardItems((prevItems) => {
+      const existingItemIndex = prevItems.findIndex(
+        (item) => item.productId === NewItemtoCard.productId
+      );
+  
+      if (existingItemIndex >= 0) {
+        const updatedItems = [...prevItems];
+        const existingItem = updatedItems[existingItemIndex];
+        updatedItems[existingItemIndex] = {
+          ...existingItem,
+          quant: +existingItem.quant + +NewSaleRegisterQuant,
+          subtotal: (+existingItem.quant + +NewSaleRegisterQuant) * existingItem.price,
+        };
+        return updatedItems;
+      }
+      setCardId(cardId + 1);
+      return [...prevItems, NewItemtoCard];
+    });
+  
     setNewSaleRegisterQuant("");
     setError("");
+    setIsLoading(!true)
   };
-  
-
   const handleGetClients = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/clientes`, {
         headers: {
@@ -227,11 +277,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
         },
       });
       setListClients(response.data.content);
+      setIsLoading(!true)
     } catch (err) {
       console.error("Erro ao puxar clientes", err);
     }
   };
-
   const handleGetProducts = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/produtos`, {
@@ -242,7 +292,8 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       setListProducts(response.data.content);
     } catch (err) {
       console.error("Erro ao puxar produtos", err);
-    }
+    }finally{
+    setIsLoading(!true)}
   };
 
   const handleReset = () => {
@@ -272,7 +323,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   return (
     <div className="containerForm">
       <h2 className="tabTitle">
-        Registro de Vendas
+        Vendas de Produtos
         <a className="hide-desktop" onClick={() => setResponsiveSaleRegister(!ResponsiveSaleRegister)}>
           {!ResponsiveSaleRegister ? <CgAdd size={45} /> : <CgRemove size={45} />}
         </a>
@@ -308,6 +359,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
             onChange={(e) => setNewSaleRegisterData(e.target.value)}
           />
 
+        </div>
+
+        <div className="line">
           <InputField
             classNameDiv="fieldDate"
             label="Data Prevista:"
@@ -316,9 +370,6 @@ function FormNewSaleRegister({ dataSaleRegister }) {
             value={NewSaleRegisterDataPrev}
             onChange={(e) => setNewSaleRegisterDataPrev(e.target.value)}
           />
-        </div>
-
-        <div className="line">
 
           <SelectFieldProduct
             classNameDiv="fieldProduct"
@@ -338,19 +389,17 @@ function FormNewSaleRegister({ dataSaleRegister }) {
             value={NewSaleRegisterQuant}
             onChange={(e) => setNewSaleRegisterQuant(e.target.value)}
           />
-          
 
-            <div className="divRegisterButton">
-              {isLoading ? <LoadingSpin /> : <button type="submit" className="registerButton" onClick={(e) => handleAddtoCard(e)}>Registrar</button>}
-            </div>
-          
 
+          <div className="divRegisterButton">
+            {isLoading ? <LoadingSpin /> : <button type="submit" className="registerButton" onClick={(e) => handleAddtoCard(e)}>Registrar</button>}
+          </div>
 
         </div>
-            <div className="errorsOrSuccess">
-              {Error && <p className="error">{Error}</p>}
-              {Success && <p className="salesuccess">{Success}</p>}
-            </div>
+        <div className="errorsOrSuccess">
+          {Error && <p className="error">{Error}</p>}
+          {Success && <p className="salesuccess">{Success}</p>}
+        </div>
       </form>
       <CardSaleRegister
         saleRegisters={CardItems}
@@ -359,7 +408,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
         handleSubmit={handleSubmit}
         handleUpdate={handleUpdate}
       />
-      
+
     </div>
   );
 }

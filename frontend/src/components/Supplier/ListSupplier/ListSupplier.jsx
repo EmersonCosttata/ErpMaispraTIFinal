@@ -1,21 +1,20 @@
-import { BiSolidUser } from "react-icons/bi";
+import { BiSolidTruck } from "react-icons/bi";
 import { BiSearch } from "react-icons/bi";
 import ModalYesOrNot from "../../ModalYesOrNot/ModalYesOrNot.jsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../AuthContext.jsx";
 import "./ListSupplier.css";
-import FormNewSupplier from '../FormNewSupplier/FormNewSupplier.jsx';
+import FormNewSupplier from "../FormNewSupplier/FormNewSupplier.jsx";
 import NavigationListSupplier from "./NavigationListSupplier.jsx";
 import PageOfListSupplier from "./PageOfListSupplier.jsx";
 import LoadingSpin from "../../LoadingSpin/LoadingSpin.jsx";
 
-const ListSupplier = ({onlyView}) => {
-
+const ListSupplier = ({ onlyView }) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   ListSupplier.defaultProps = {
     onlyView: false,
   };
-
   const { JwtToken } = useAuth();
   const [suppliers, setSuppliers] = useState();
   const [supplierUpdate, setSupplierUpdate] = useState(null);
@@ -27,17 +26,17 @@ const ListSupplier = ({onlyView}) => {
   const [supplierNameShow, setSupplierNameShow] = useState();
 
   const [listSuppliersPageSelected, setListSuppliersPage] = useState(1);
-  
+
   const handleShowSuppliers = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/api/fornecedores`, {
+      const response = await axios.get(`${apiUrl}/api/fornecedores`, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
         },
       });
       setSuppliers(response.data.content);
-      setIsLoading(!true)
+      setIsLoading(!true);
     } catch (err) {
       console.log(err);
       alert("Erro ao puxar fornecedores!");
@@ -63,7 +62,7 @@ const ListSupplier = ({onlyView}) => {
     }
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/api/fornecedores/${supplier.id}`, {
+      await axios.delete(`${apiUrl}/api/fornecedores/${supplier.id}`, {
         headers: {
           Authorization: `Bearer ${JwtToken}`,
         },
@@ -80,27 +79,39 @@ const ListSupplier = ({onlyView}) => {
     setSupplierUpdate(data);
   };
 
-  const filteredSuppliers = suppliers?.filter((supplier) => {
-    const matchesStatus =
-      (showAtivos && supplier.status === "ativo") ||
-      (showInativos && supplier.status === "inativo");
-    const matchesSearch = supplier.fullName.toLowerCase().includes(searchSuppliers.toLowerCase());
-    return matchesStatus && matchesSearch;
-  }) || [];
+  const filteredSuppliers =
+    suppliers?.filter((supplier) => {
+      const matchesStatus =
+        (showAtivos && supplier.status === "ativo") ||
+        (showInativos && supplier.status === "inativo");
+      const matchesSearch = supplier.fullName
+        .toLowerCase()
+        .includes(searchSuppliers.toLowerCase());
+      return matchesStatus && matchesSearch;
+    }) || [];
 
   const maxSuppliersPerList = 6;
-  let contSupplierPages = Math.ceil(filteredSuppliers.length / maxSuppliersPerList);
+  let contSupplierPages = Math.ceil(
+    filteredSuppliers.length / maxSuppliersPerList
+  );
 
   return (
     <>
       {isLoading && <LoadingSpin />}
-      {onlyView ? "" : <FormNewSupplier dataSupplier={supplierUpdate} onSubmitSuccess={handleShowSuppliers} />}
-      
+      {onlyView ? (
+        ""
+      ) : (
+        <FormNewSupplier
+          dataSupplier={supplierUpdate}
+          onSubmitSuccess={handleShowSuppliers}
+        />
+      )}
+
       <div className="contentListSuppliers">
         <div className="ListSuppliers">
           <div className="headerListSuppliers">
             <div className="title">
-              <BiSolidUser className="userIcon" size={75} />
+              <BiSolidTruck className="userIcon" size={65} />
               <h3>Lista de Fornecedores</h3>
             </div>
             <section>
@@ -165,13 +176,17 @@ const ListSupplier = ({onlyView}) => {
               <tbody>
                 <ModalYesOrNot
                   show={showModal}
-                  onClose={() => setShowModal(false)}
                   title="Deletar Fornecedor?"
-                >
-                  <h6>Confirma Exclusão de {supplierNameShow && supplierNameShow}?</h6>
-                  <button onClick={() => window.handleModalConfirm(true)}>Sim</button>
-                  <button onClick={() => window.handleModalConfirm(false)}>Não</button>
-                </ModalYesOrNot>
+                  deleteItem={supplierNameShow}
+                  onConfirm={() => {
+                    window.handleModalConfirm(true);
+                    setShowModal(false);
+                  }}
+                  onClose={() => {
+                    window.handleModalConfirm(false);
+                    setShowModal(false);
+                  }}
+                />
 
                 <PageOfListSupplier
                   suppliers={filteredSuppliers}

@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -46,8 +47,9 @@ public class ProductDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal incomingStock = BigDecimal.ZERO;
 
-    private List<SupplierSimpleDto> suppliers;
+    private List<SupplierSimpleDto> suppliers = new ArrayList<>();
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public BigDecimal getAvailableForSale(){
         return this.stock.subtract(this.reservedStock);
     }

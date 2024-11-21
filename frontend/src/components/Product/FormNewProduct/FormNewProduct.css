@@ -1,229 +1,240 @@
 hide-desktop {
-    display: none;
-    text-decoration: none;
-    color: black;
+  display: none;
+  text-decoration: none;
+  color: black;
+}
+
+div.containerForm {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 2em;
+}
+
+h2.tabTitle {
+  text-align: left;
+  margin-left: 15px;
+  margin-block: 40px;
+}
+
+form.visibleformNewProduct {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 60px;
+  row-gap: 15px;
+}
+
+form.hiddenformNewProduct {
+  display: none;
+}
+
+.line {
+  grid-column: 1/3;
+  display: flex;
+  gap: inherit;
+}
+
+
+
+
+
+.fieldSupplierCode {
+  flex-basis: calc(60% + 19px);
+}
+
+.newProductName {
+  flex-basis: calc(40% - 19px);
+}
+
+.fieldPrice {
+  flex-basis: 25%;
+  flex-grow: 0.5;
+  flex-shrink: 2;
+}
+
+.fieldUnitofMeasurement {
+  flex-grow: 1;
+  flex-basis: 35%;
+}
+.fieldStock {
+  flex-basis: 20%;
+}
+.fieldSupplier {
+  flex-grow: 1.5;
+  flex-basis: 45%;
+}
+
+
+
+.divIE {
+  display: flex;
+  flex-direction: column;
+  justify-content: END;
+  flex: 1;
+  position: relative;
+  gap: 5px;
+  bottom: 10px;
+  flex-basis: 40%;
+}
+
+/* line3 */
+.fieldAddress {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 70%;
+}
+
+.fieldCep {
+  flex-grow: 2;
+  flex-shrink: 3;
+  flex-basis: 30%;
+}
+
+/* line 4 */
+.fieldAddressNumber {
+  flex-grow: 0;
+  flex-shrink: 3;
+  flex-basis: 20%;
+}
+
+.fieldDistrict {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 30%;
+}
+
+.divSelectCity {
+  flex-grow: 1.5;
+  flex-shrink: 1;
+  flex-basis: 50%;
+}
+
+/* line 5 */
+
+#formNewProduct .line5 {
+  justify-content: end;
+}
+
+
+
+.selectCity {
+  -webkit-appearance: none;
+  /* Remove a aparência padrão no Chrome/Safari */
+  -moz-appearance: none;
+  /* Remove a aparência padrão no Firefox */
+  appearance: none;
+  /* Remove a aparência padrão */
+  background: url(../../assets/icons/selectArrow.svg) no-repeat right center;
+  background-position: calc(100% - 1rem);
+  background-size: 2rem;
+}
+
+.fieldDescription {
+  width: 100%;
+  grid-column: 1/4;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  gap: 2rem;
+}
+
+.divStatusAndButtons {
+  grid-column: 4/5;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+#labelNewProductStatus {
+  flex-basis: 35%;
+  display: flex;
+  flex-flow: column;
+  flex-direction: column;
+  align-items: start;
+}
+
+#labelNewProductStatus span {
+  margin: 0px;
+  margin-bottom: 2px;
+}
+
+.isInvalid {
+  border-color: var(--system-danger);
+  background-color: #fff2f2;
+}
+
+/* ------------- PLACEHODER COLOR ------------- */
+
+::-webkit-input-placeholder {
+  color: var(--text-40);
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: var(--text-40);
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: var(--text-40);
+}
+
+:-ms-input-placeholder {
+  color: var(--text-40);
+}
+
+@media (max-width: 768px) {
+  .hide-desktop {
+    display: block;
+    margin-left: 0.05em;
   }
-  
+
   div.containerForm {
-    width: 80%;
+    width: 98%;
     margin: 0 auto;
-    margin-bottom: 2em;
   }
+
   h2.tabTitle {
-    text-align: left;
-    margin-left: 15px;
-    margin-block: 40px;
+    text-align: center;
+    margin-left: none;
+    margin-block: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
   }
-  
+
   form.visibleformNewProduct {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 60px;
-    row-gap: 15px;
+    display: flex;
+    flex-direction: column;
   }
-  
+
   form.hiddenformNewProduct {
     display: none;
-  }
-  
-  .line {
-    grid-column: 1/3;
-    display: flex;
-    gap: inherit;
-  }
-  #formNewEmployee .line5 {
-    justify-content: end;
-  }
-  
-  .fieldName {
-    flex-basis: calc(60% + 19px);
-  }
-  
-  .fieldPrice {
-    flex-basis: calc(40% - 19px);
-  }
-  
-  .fieldStock {
-    flex-basis: 25%;
-    flex-grow: 0.5;
-    flex-shrink: 2;
-  }
-  
-  .fieldUnitofMeasurement {
-    flex-basis: 35%;
-  }
-  
-  .divCpfOrCnpj {
-    display: flex;
     flex-direction: column;
-    justify-content: start;
-    flex: 1;
-    position: relative;
-    gap: 5px;
-    bottom: 10px;
-    flex-basis: 40%;
   }
-  
-  .divIE {
-    display: flex;
-    flex-direction: column;
-    justify-content: END;
-    flex: 1;
-    position: relative;
-    gap: 5px;
-    bottom: 10px;
-    flex-basis: 40%;
-  }
-  
-  /* line3 */
+
   .fieldAddress {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 70%;
+    grid-column: 1/3;
   }
-  
-  .fieldCep {
-    flex-grow: 2;
-    flex-shrink: 3;
-    flex-basis: 30%;
-  }
-  /* line 4 */
-  .fieldAddressNumber {
-    flex-grow: 0;
-    flex-shrink: 3;
-    flex-basis: 20%;
-  }
-  
-  .fieldDistrict {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 30%;
-  }
-  
-  .divSelectCity {
-    flex-grow: 1.5;
-    flex-shrink: 1;
-    flex-basis: 50%;
-  }
-  
-  /* line 5 */
-  
-  .line5 {
-    justify-content: space-between;
-  }
-  
-  
-  
-  .selectCity {
-    -webkit-appearance: none; /* Remove a aparência padrão no Chrome/Safari */
-    -moz-appearance: none; /* Remove a aparência padrão no Firefox */
-    appearance: none; /* Remove a aparência padrão */
-    background: url(../../assets/icons/selectArrow.svg) no-repeat right center;
-    background-position: calc(100% - 1rem);
-    background-size: 2rem;
-  }
-  
-  .fieldDescription {
-    width: 100%;
-    grid-column: 1/4;
+
+  .divButtons {
+    grid-column: 2/3;
     display: flex;
-    justify-content: start;
-    align-items: start;
-    gap: 2rem;
+    justify-content: center;
+    gap: 1em;
+    margin: none;
   }
-  .divStatusAndButtons {
-    grid-column: 4/5;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-  #labelNewProductStatus {
-    flex-basis: 35%;
-    display: flex;
-    flex-flow: column;
-    flex-direction: column;
-    align-items: start;
-  }
-  #labelNewProductStatus span {
-    margin: 0px;
-    margin-bottom: 2px;
-  }
-  
+
   .isInvalid {
     border-color: var(--system-danger);
     background-color: #fff2f2;
   }
-  
-  /* ------------- PLACEHODER COLOR ------------- */
-  
-  ::-webkit-input-placeholder {
-    color: var(--text-40);
+
+  .line {
+    grid-column: 1/3;
+    display: flex;
+    gap: inherit;
+    flex-direction: column;
+    /* COLOCAR O FLEX-DIRECTION: COLUMN; PARA FORMATAR O MOBILE */
   }
-  :-moz-placeholder {
-    /* Firefox 18- */
-    color: var(--text-40);
-  }
-  
-  ::-moz-placeholder {
-    /* Firefox 19+ */
-    color: var(--text-40);
-  }
-  
-  :-ms-input-placeholder {
-    color: var(--text-40);
-  }
-  
-  @media (max-width: 768px) {
-    .hide-desktop {
-      display: block;
-      margin-left: 0.05em;
-    }
-    div.containerForm {
-      width: 98%;
-      margin: 0 auto;
-    }
-    h2.tabTitle {
-      text-align: center;
-      margin-left: none;
-      margin-block: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: row;
-    }
-    form.visibleformNewProduct {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    form.hiddenformNewProduct {
-      display: none;
-      flex-direction: column;
-    }
-  
-    .fieldAddress {
-      grid-column: 1/3;
-    }
-  
-    .divButtons {
-      grid-column: 2/3;
-      display: flex;
-      justify-content: center;
-      gap: 1em;
-      margin: none;
-    }
-  
-    .isInvalid {
-      border-color: var(--system-danger);
-      background-color: #fff2f2;
-    }
-  
-    .line {
-      grid-column: 1/3;
-      display: flex;
-      gap: inherit;
-      flex-direction: column;
-      /* COLOCAR O FLEX-DIRECTION: COLUMN; PARA FORMATAR O MOBILE */
-    }
-  }
-  
+}

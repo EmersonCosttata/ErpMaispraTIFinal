@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-function NavigationListClients({ contClientPages, setListClientsPage }) {
+function NavigationListSaleRegister({ contSaleRegisterPages, setListSaleRegistersPage }) {
   const [listPageSelected, setListPageSelected] = useState(1);
 
   useEffect(() => {
     const selectedPageElement = document.getElementById(
-      "pageClientList" + listPageSelected
+      "pageSaleRegisterList" + listPageSelected
     );
 
     if (selectedPageElement) {
@@ -19,11 +19,11 @@ function NavigationListClients({ contClientPages, setListClientsPage }) {
 
   const handlePageClick = (page) => {
     setListPageSelected(page); 
-    setListClientsPage(page); 
+    setListSaleRegistersPage(page); 
   };
 
   const goToNextPage = () => {
-    if (listPageSelected < contClientPages) {
+    if (listPageSelected < contSaleRegisterPages) {
       handlePageClick(listPageSelected + 1);
     }
   };
@@ -46,12 +46,12 @@ function NavigationListClients({ contClientPages, setListClientsPage }) {
         ❮
       </a>
 
-      {Array.from({ length: contClientPages }, (_, index) => {
+      {Array.from({ length: contSaleRegisterPages }, (_, index) => {
         const pageNum = index + 1;
         return (
           <a
             key={pageNum}
-            id={"pageClientList" + pageNum}
+            id={"pageSaleRegisterList" + pageNum}
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -75,4 +75,4 @@ function NavigationListClients({ contClientPages, setListClientsPage }) {
   );
 }
 
-export default NavigationListClients;
+export default NavigationListSaleRegister;

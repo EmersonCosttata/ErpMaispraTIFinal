@@ -21,7 +21,8 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    column-gap: 0.7rem;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
     
 }
 .headerListSuppliers .title h3 {

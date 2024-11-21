@@ -1,4 +1,4 @@
-import { BiSolidUser } from "react-icons/bi";
+import { BiSolidUserAccount } from "react-icons/bi";
 import { BiSearch } from "react-icons/bi";
 import ModalYesOrNot from "../../ModalYesOrNot/ModalYesOrNot.jsx";
 import axios from "axios";
@@ -10,8 +10,7 @@ import NavigationListEmployees from "./NavigationListEmployees.jsx";
 import PageOfListEmployees from "./PageOfListEmployees.jsx";
 import LoadingSpin from "../../LoadingSpin/LoadingSpin.jsx";
 
-const ListEmployees = ({onlyView}) => {
-
+const ListEmployees = ({ onlyView }) => {
   ListEmployees.defaultProps = {
     onlyView: false,
   };
@@ -32,7 +31,7 @@ const ListEmployees = ({onlyView}) => {
   const [contEmployeePages, setContEmployeePages] = useState(0);
 
   const handleShowEmployees = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const response = await axios.get(`${apiUrl}/api/usuarios`, {
         headers: {
@@ -41,7 +40,7 @@ const ListEmployees = ({onlyView}) => {
       });
 
       setEmployees(response.data.content);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       alert("Erro ao puxar employeees!");
@@ -106,13 +105,20 @@ const ListEmployees = ({onlyView}) => {
   return (
     <>
       {isLoading && <LoadingSpin />}
-      {onlyView ? "" : <FormNewEmployee dataEmployee={employeeUpdate} onSubmitSuccess={handleShowEmployees}  />}
-      
+      {onlyView ? (
+        ""
+      ) : (
+        <FormNewEmployee
+          dataEmployee={employeeUpdate}
+          onSubmitSuccess={handleShowEmployees}
+        />
+      )}
+
       <div className="contentListEmployees">
         <div className="ListEmployees">
           <div className="headerListEmployees">
             <div className="title">
-              <BiSolidUser className="userIcon" size={75} />
+              <BiSolidUserAccount className="userIcon" size={65} />
               <h3>Lista de usuários</h3>
             </div>
             <section>
@@ -177,20 +183,17 @@ const ListEmployees = ({onlyView}) => {
               <tbody>
                 <ModalYesOrNot
                   show={showModal}
-                  onClose={() => setShowModal(false)}
-                  title="Deletar Employeee?"
-                >
-                  <h6>
-                    Confirma Exclusão de{" "}
-                    {EmployeeeNameShow && EmployeeeNameShow}?
-                  </h6>
-                  <button onClick={() => window.handleModalConfirm(true)}>
-                    Sim
-                  </button>
-                  <button onClick={() => window.handleModalConfirm(false)}>
-                    Não
-                  </button>
-                </ModalYesOrNot>
+                  title="Deletar Usuario?"
+                  deleteItem={EmployeeeNameShow}
+                  onConfirm={() => {
+                    window.handleModalConfirm(true);
+                    setShowModal(false);
+                  }}
+                  onClose={() => {
+                    window.handleModalConfirm(false);
+                    setShowModal(false);
+                  }}
+                />
 
                 <PageOfListEmployees
                   employees={filteredEmployees}

@@ -108,7 +108,6 @@ public class ProductService {
         // Itera sobre os SupplierSimpleDto fornecidos
         supplierDtos.forEach(supplierDto -> {
             Supplier supplier = convertToEntity(supplierService.findById(supplierDto.getId()), Supplier.class);
-            supplier.setFullName(supplierDto.getFullName());
             product.getSuppliers().add(supplier);
         });
     }

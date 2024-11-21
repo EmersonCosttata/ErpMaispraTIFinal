@@ -1,7 +1,9 @@
-.contentListSaleRegisters{
+
+ .contentListSaleRegisters{
+
     width: 80%;
     height: auto;
-    margin: 0 auto; 
+    margin: 0 auto;
     border-radius: 1em;
     border: 2px solid var(--text-100, #2A153B);
 }
@@ -10,18 +12,18 @@
     display: none;
     text-decoration: none;
     color: black;
-  }
+}
 
-  section.visibleClient {
+section.visibleClient {
     display: block;
 
-  }
-  
-  section.hiddenClient {
-  display: none;
-  }
+}
 
-.headerListSaleRegisters{
+section.hiddenClient {
+    display: none;
+}
+
+.headerListSaleRegisters {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -30,41 +32,47 @@
     margin-inline: 2.2rem;
     column-gap: 5%;
 }
+
 .headerListSaleRegisters .title {
     color: var(--text-100, #2A153B);
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    column-gap: 0.7rem;
-    
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+
 }
+
 .headerListSaleRegisters .title h3 {
     text-align: left;
-    
-    
+
+
 }
-.headerListSaleRegisters section{
+
+.headerListSaleRegisters section {
     display: flex;
     align-items: center;
     column-gap: 20px;
     /* width: 50%; */
     flex-grow: 1;
-} 
-.ListSaleRegisters hr{
+}
+
+.ListSaleRegisters hr {
     height: 2px;
     width: 95%;
     background: var(--text-100, #2A153B);
     margin: 0 auto;
     opacity: 100%;
 }
-.searchClient{
+
+.searchSaleRegister {
     height: 2em;
-    
+
     display: flex;
     align-items: center;
     padding-inline: 5px;
     padding-block: 17px;
-    
+
     border-radius: 15px;
     border: 1px solid var(--primary-dark);
     outline: 0;
@@ -74,11 +82,13 @@
     flex-shrink: 1;
     flex-basis: 350px;
 }
-.searchClient input{
+
+.searchSaleRegister input {
     height: 90%;
     border: none;
 }
-.labelCheckboxes{
+
+.labelCheckboxes {
     height: 100%;
     display: flex;
     align-items: center;
@@ -87,10 +97,11 @@
 }
 
 .labelCheckbox {
-    
+
     flex-direction: column;
-    
+
 }
+
 div.divCheckboxes {
     flex-wrap: wrap;
     flex-direction: row;
@@ -98,22 +109,23 @@ div.divCheckboxes {
     align-items: flex-end;
     row-gap: 10px;
     column-gap: 1.8rem;
-    
-    
+
+
     flex-grow: 0.5;
     flex-shrink: 1;
     flex-basis: 200px;
-    
-    
-    
-}
-.inputCheckbox + label:before {
-    margin-right: 0.5rem;
-    
-    
+
+
+
 }
 
-.ListSaleRegistersTable{
+.inputCheckbox+label:before {
+    margin-right: 0.5rem;
+
+
+}
+
+.ListSaleRegistersTable {
     padding-inline: 2.25rem;
     padding-top: 1rem;
     overflow-x: auto;
@@ -126,7 +138,7 @@ table {
 
 thead th {
     /* border: 1px solid #2A153B; */
-    
+
     padding: 0.7rem;
     padding-bottom: 1.8rem;
     text-align: left !important;
@@ -135,21 +147,21 @@ thead th {
 
 
 
-thead th:first-child{
+thead th:first-child {
     padding-left: 1.75rem;
 }
 
 
-tbody > td{
+tbody>td {
     text-wrap: nowrap;
-    
+
 
 
     padding-block: 0.55rem;
     padding-inline: 0.7rem;
     background-color: var(--text-20);
-    
-    
+
+
     /* Text */
     color: var(--text-100);
     text-align: left;
@@ -157,50 +169,58 @@ tbody > td{
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 150%; /* 24px */
+    line-height: 150%;
+    /* 24px */
     margin-inline: -1px;
 }
+
 table {
     border-spacing: 0 0.6rem;
-    
+
 }
 
 tbody tr td:first-child {
     border-radius: 1rem 0 0 1rem;
-    padding-left: 1.75rem; 
+    padding-left: 1.75rem;
 }
 
 tbody tr td:last-child {
-    border-radius: 0rem 1rem 1rem 0rem; 
+    border-radius: 0rem 1rem 1rem 0rem;
     text-align: end;
-    
+
 }
-tbody td svg{
+
+tbody td svg {
     margin-inline: 0.15em;
     fill: var(--text-100);
 }
-tbody td svg.editLine:hover{
+
+tbody td svg.editLine:hover {
     fill: var(--system-info);
 }
-tbody td svg.deleteLine:hover{
+
+tbody td svg.deleteLine:hover {
     fill: var(--system-danger) !important;
 }
 
-
+.DeliveryLine{
+    text-decoration: none;
+}
 
 /* tbody tr:hover {
     background-color: #e6e6e6;
 } */
-.pagination{
+.pagination {
     display: flex;
     justify-content: center;
     margin-block: 0.7rem 1.3rem;
 }
+
 .pagination a {
     text-decoration: none;
     width: min-content;
     height: min-content;
-    
+
     color: var(--primary-dark);
     padding: 8px 12px;
     border-radius: 5px;
@@ -208,12 +228,13 @@ tbody td svg.deleteLine:hover{
 }
 
 
- 
- 
+
+
 .pagination a.active {
     background-color: var(--primary-dark);
     color: white;
 }
+
 .pagination a.active:hover {
     background-color: var(--primary-dark);
 }
@@ -227,42 +248,54 @@ tbody td svg.deleteLine:hover{
         width: 100%;
         border: none;
     }
+
     .headerListSaleRegisters .userIcon {
         width: 2.875rem;
     }
+
     .headerListSaleRegisters h3 {
         font-size: 2rem;
     }
+
     .ListSaleRegistersTable {
         padding-top: 0;
     }
-    .headerListSaleRegisters, .headerListSaleRegisters section {
+
+    .headerListSaleRegisters,
+    .headerListSaleRegisters section {
         flex-direction: column;
     }
-    .headerListSaleRegisters, .headerListSaleRegisters section {
+
+    .headerListSaleRegisters,
+    .headerListSaleRegisters section {
         flex-direction: column;
     }
+
     .headerListSaleRegisters section {
         width: 100%;
     }
-    .headerListSaleRegisters section .searchClient {
+
+    .headerListSaleRegisters section .searchSaleRegister {
         flex-basis: 0;
         width: 100%;
     }
-    .headerListSaleRegisters .divCheckboxes, .headerListSaleRegisters.divRadios {
+
+    .headerListSaleRegisters .divCheckboxes,
+    .headerListSaleRegisters.divRadios {
         flex-basis: 0 !important;
         width: 100%;
         justify-content: end !important;
         margin-top: 0.7rem;
-        
+
     }
 
-    .headerListSaleRegisters .divCheckboxes .labelRadio::before{
+    .headerListSaleRegisters .divCheckboxes .labelRadio::before {
         transform: scale(0.5);
         border-radius: 50%;
-        
+
     }
-    .headerListSaleRegisters .inputRadio:checked + label:before {
+
+    .headerListSaleRegisters .inputRadio:checked+label:before {
         content: "\00A0";
     }
 
@@ -270,10 +303,10 @@ tbody td svg.deleteLine:hover{
         display: none;
     }
 
-    
-    
-    
-    
+
+
+
+
     .ListSaleRegistersTable thead {
         display: none;
     }
@@ -290,25 +323,27 @@ tbody td svg.deleteLine:hover{
 
     .ListSaleRegistersTable tbody tr td {
         display: flex;
-        
+
         align-items: center;
         padding: 0.3rem;
-        
-        
-        
-        
+
+
+
+
     }
 
-   
+
 
     .td-icon {
         margin: 2px 0.3rem 0 0;
         min-width: 16px;
     }
+
     .td-icon-2 {
         margin: 0 0.3rem 0 0;
         min-width: 16px;
     }
+
     .td-icon-3 {
         margin: 0 0.3rem 3px 0;
         min-width: 16px;
@@ -318,17 +353,20 @@ tbody td svg.deleteLine:hover{
     td.td-fullName {
         border-radius: 0.9375rem 0.9375rem 0 0 !important;
         padding-left: 0.7rem !important;
-        
+
         flex-wrap: nowrap;
     }
+
     td.td-email {
         padding-left: 0.7rem !important;
     }
+
     td.td-phoneNumber {
         border-radius: 0 0 0.9375rem 0.9375rem !important;
         padding-left: 0.7rem !important;
-        
+
     }
+
     td.td-cpfCnpj {
         display: flex;
         position: absolute;
@@ -338,10 +376,11 @@ tbody td svg.deleteLine:hover{
         border-radius: 0 0 0.9375rem 0 !important;
 
         justify-content: end;
-        
+
         padding-left: 3px !important;
         padding-right: 0.7rem !important;
     }
+
     td.td-editLine {
         position: absolute;
         top: 0;
@@ -351,7 +390,7 @@ tbody td svg.deleteLine:hover{
     }
 
 
-    
+
 
 
 
@@ -361,20 +400,22 @@ tbody td svg.deleteLine:hover{
     .headerListSaleRegisters .userIcon {
         min-width: 2.5rem;
     }
-    
+
     td.td-editLine {
-        
+
         flex-direction: column-reverse;
         height: 100%;
         border-bottom-right-radius: 0.9375rem !important;
         justify-content: space-evenly;
         padding-left: 0.3rem !important;
     }
+
     td.td-phoneNumber {
         border-radius: 0 !important;
         padding-left: 0.7rem !important;
-        
+
     }
+
     td.td-cpfCnpj {
         display: flex;
         position: static;
@@ -382,14 +423,15 @@ tbody td svg.deleteLine:hover{
         border-radius: 0 0 0.9375rem 0.9375rem !important;
 
         justify-content: start;
-        
+
         padding-left: 0.7rem !important;
         padding-right: 0 !important;
     }
+
     .ListSaleRegistersTable tbody tr {
-        
+
 
         width: calc(100dvw - 72px) !important;
-        
+
     }
 }

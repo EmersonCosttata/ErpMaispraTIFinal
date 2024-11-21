@@ -126,7 +126,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA0ODIyMjUsImV4cCI6MTczMDQ4MzEyNX0.5uYcOtpDtdq8_5vAzXrmDng097VV3ZyYs8l39ZV_LA4",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA5NDQ3MTAsImV4cCI6MTczMDk0NTYxMH0.kGxqhOzOchdmMV-McByxVzyatl5xTEtqzWH4ysGhcZk",
 									"type": "string"
 								}
 							]
@@ -135,7 +135,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"314.559.980-15\"\r\n}",
+							"raw": "{\r\n    \"cpf\": \"000.000.000-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,7 +143,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/auth/validation-user?token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA0ODIyMjUsImV4cCI6MTczMDQ4MzEyNX0.5uYcOtpDtdq8_5vAzXrmDng097VV3ZyYs8l39ZV_LA4",
+							"raw": "http://localhost:8080/auth/validation-user?token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA5NDQ3MTAsImV4cCI6MTczMDk0NTYxMH0.kGxqhOzOchdmMV-McByxVzyatl5xTEtqzWH4ysGhcZk",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -156,7 +156,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA0ODIyMjUsImV4cCI6MTczMDQ4MzEyNX0.5uYcOtpDtdq8_5vAzXrmDng097VV3ZyYs8l39ZV_LA4"
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZXJuYW5kb19hbmdlbGlAaG90bWFpbC5jb20iLCJpYXQiOjE3MzA5NDQ3MTAsImV4cCI6MTczMDk0NTYxMH0.kGxqhOzOchdmMV-McByxVzyatl5xTEtqzWH4ysGhcZk"
 								}
 							]
 						}
@@ -354,13 +354,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/clientes/1",
+							"raw": "{{host}}/clientes/2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"clientes",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -471,7 +471,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"Marcelo Update\",\r\n    \"typePfOrPj\": \"PF\",\r\n    \"gender\": \"MASCULINO\",\r\n    \"cpfCnpj\": \"373.858.040-98\",\r\n    \"stateRegistration\": \"125-55SDS4as\",\r\n    \"phoneNumber\": \"513543-4811\",\r\n    \"email\": \"marcelo_mnicolai@gmail.com\", \r\n    \"address\": \"Rua Casemiro Alves\", \r\n    \"number\": \"S/N\", \r\n    \"district\": \"Centro\",\r\n    \"zipCode\": \"95.650-000\",\r\n    \"city\": \"Cachoeirinha\", \r\n    \"state\": \"RS\",\r\n    \"country\": \"Brasil\", \r\n    \"birthDate\": \"1982-03-29\",\r\n    \"creditLimit\": 50000.00, \r\n    \"notes\" : \"Gremistão e bom pagador.\", \r\n    \"status\" : \"ativo\"\r\n}\r\n",
+							"raw": "{\r\n    \"fullName\": \"Marcelo Update\",\r\n    \"typePfOrPj\": \"PF\",\r\n    \"gender\": \"MASCULINO\",\r\n    \"cpfCnpj\": \"016.664.960-06\",\r\n    \"stateRegistration\": \"125-55SDS4as\",\r\n    \"phoneNumber\": \"513543-4811\",\r\n    \"email\": \"marcelo_mnicolai@gmail.com\", \r\n    \"address\": \"Rua Casemiro Alves\", \r\n    \"number\": \"S/N\", \r\n    \"district\": \"Centro\",\r\n    \"zipCode\": \"95.650-000\",\r\n    \"city\": \"Cachoeirinha\", \r\n    \"state\": \"RS\",\r\n    \"country\": \"Brasil\", \r\n    \"birthDate\": \"1982-03-29\",\r\n    \"creditLimit\": 50000.00, \r\n    \"notes\" : \"Gremistão e bom pagador.\", \r\n    \"status\" : \"inativo\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -479,13 +479,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/clientes/6",
+							"raw": "{{host}}/clientes/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"clientes",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -523,6 +523,765 @@
 							"path": [
 								"clientes",
 								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendas",
+			"item": [
+				{
+					"name": "Criar venda",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"expectedDeliveryDate\": \"2024-11-09\",\r\n  \"clientId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar venda por id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todas as vendas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos itens da venda",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/1/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"1",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos itens da venda (por id)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/1/itens/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"1",
+								"itens",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos itens da venda (por id do produto)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/1/itens/produtos/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"1",
+								"itens",
+								"produtos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar dados da venda",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleDate\": \"2024-11-13T10:24:00.000Z\",\r\n  \"expectedDeliveryDate\": \"2024-11-14\",\r\n  \"clientId\": 1,\r\n  \"saleItems\": [],\r\n  \"saleStatus\": \"pendente\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Itens de venda",
+			"item": [
+				{
+					"name": "Inserir itens em uma venda",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 1,\r\n  \"quantitySold\": 1,\r\n  \"salePrice\": 11.51\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/2/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"2",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar item vendido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 2,\r\n  \"quantitySold\": 4,\r\n  \"salePrice\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos os itens vendidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/vendas/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entregas",
+			"item": [
+				{
+					"name": "Criar entrega",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/entregas",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"entregas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar item vendido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 2,\r\n  \"quantitySold\": 4,\r\n  \"salePrice\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos os itens vendidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/vendas/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Itens de entrega",
+			"item": [
+				{
+					"name": "Inserir itens em entrega",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"saleId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/entregas/1/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"entregas",
+								"1",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar item vendido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 2,\r\n  \"quantitySold\": 4,\r\n  \"salePrice\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/vendas/itens/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos os itens vendidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/vendas/itens",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"vendas",
+								"itens"
 							]
 						}
 					},
@@ -701,7 +1460,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"fullName\": \"Marcelo update\",\r\n    \"typePfOrPj\": \"PF\",\r\n    \"gender\": \"MASCULINO\",\r\n    \"cpfCnpj\": \"321.161.100-2asd5\",\r\n    \"rgIe\": \"125-55\",\r\n    \"phoneNumber\": \"513543-4811\",\r\n    \"email\": \"johndoe@com.com\", \r\n    \"address\": \"Rua Casemiro Alves\", \r\n    \"number\": \"S/N\", \r\n    \"district\": \"Centro\",\r\n    \"zipCode\": \"95.650-000\",\r\n    \"city\": \"Cachoeirinha\", \r\n    \"state\": \"RS\",\r\n    \"country\": \"Brasil\", \r\n    \"birthDate\": \"1982-03-29\",\r\n    \"creditLimit\": 50000.00, \r\n    \"notes\" : \"Gremistáo e bom pagador.\", \r\n    \"status\" : \"ativo\"\r\n}",
+							"raw": "{\r\n     \"fullName\": \"Marcelo update\",\r\n    \"typePfOrPj\": \"PF\",\r\n    \"gender\": \"MASCULINO\",\r\n    \"cpfCnpj\": \"321.161.100-25\",\r\n    \"rgIe\": \"125-55\",\r\n    \"phoneNumber\": \"513543-4811\",\r\n    \"email\": \"johndoe@com.com\", \r\n    \"address\": \"Rua Casemiro Alves\", \r\n    \"number\": \"S/N\", \r\n    \"district\": \"Centro\",\r\n    \"zipCode\": \"95.650-000\",\r\n    \"city\": \"Cachoeirinha\", \r\n    \"state\": \"RS\",\r\n    \"country\": \"Brasil\", \r\n    \"birthDate\": \"1982-03-29\",\r\n    \"creditLimit\": 50000.00, \r\n    \"notes\" : \"Gremistáo e bom pagador.\", \r\n    \"status\" : \"ativo\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -709,13 +1468,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/fornecedores/7",
+							"raw": "{{host}}/fornecedores/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"fornecedores",
-								"7"
+								"1"
 							]
 						}
 					},
@@ -780,7 +1539,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"supplierCode\": \"C600-HK\",  \r\n  \"name\": \"Cerveja garrafa 600ml\",\r\n  \"description\": \"Heineken - retornável\",\r\n  \"unitOfMeasure\": \"Unidade\",\r\n  \"price\": 1.00,\r\n  \"stock\": 5,\r\n    \"suppliers\": [\r\n        {\r\n            \"id\": 8\r\n        },\r\n        {\r\n            \"id\":2\r\n        }\r\n]\r\n}",
+							"raw": "{\r\n  \"supplierCode\": \"C600-HK\",  \r\n  \"name\": \"Cerveja garrafa 600ml\",\r\n  \"description\": \"Heineken - retornável\",\r\n  \"unitOfMeasure\": \"Unidade\",\r\n  \"productPrice\": 1.00,\r\n  \"stock\": 5,\r\n    \"suppliers\": [\r\n        {\r\n            \"id\": 1\r\n        },\r\n        {\r\n            \"id\": 2\r\n        }\r\n]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -800,7 +1559,7 @@
 					"response": []
 				},
 				{
-					"name": "Busca por id",
+					"name": "Busca produto por id",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -994,6 +1753,44 @@
 					"response": []
 				},
 				{
+					"name": "Insert card",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"slot1\": \"item3\",\r\n  \"slot2\": \"item2\",\r\n  \"slot3\": \"item1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/usuarios/1/cards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"usuarios",
+								"1",
+								"cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Atualizar usuario",
 					"request": {
 						"auth": {
@@ -1097,13 +1894,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/usuarios/4",
+							"raw": "{{host}}/usuarios/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"usuarios",
-								"4"
+								"1"
 							]
 						}
 					},

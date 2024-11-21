@@ -1,11 +1,12 @@
 import { BiSolidUser } from "react-icons/bi";
 import { BiSearch } from "react-icons/bi";
+import { FaBoxes } from "react-icons/fa";
 import ModalYesOrNot from "../../ModalYesOrNot/ModalYesOrNot.jsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../AuthContext.jsx";
 import "./ListProduct.css";
-import FormNewProduct from '../FormNewProduct/FormNewProduct.jsx';
+import FormNewProduct from "../FormNewProduct/FormNewProduct.jsx";
 import NavigationListProduct from "./NavigationListProduct.jsx";
 import PageOfListProduct from "./PageOfListProduct.jsx";
 import LoadingSpin from "../../LoadingSpin/LoadingSpin.jsx";
@@ -22,7 +23,7 @@ const ListProduct = () => {
 
   const [listProductsPageSelected, setListProductsPage] = useState(1);
   const handleShowProducts = async () => {
-    
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/produtos`, {
         headers: {
@@ -30,6 +31,7 @@ const ListProduct = () => {
         },
       });
       setProducts(response.data.content);
+      setIsLoading(false)
     } catch (err) {
       console.log(err);
       alert("Erro ao puxar produtos!");
@@ -41,6 +43,7 @@ const ListProduct = () => {
   }, []);
 
   const deleteProduct = async (product) => {
+    console.log(product.id)
     setProductNameShow(product.name);
     const confirmDelete = await new Promise((resolve) => {
       setShowModal(true);
@@ -60,11 +63,12 @@ const ListProduct = () => {
           Authorization: `Bearer ${JwtToken}`,
         },
       });
-      setIsLoading(false);
-      handleShowProducts();
+      handleShowProducts(); 
     } catch (err) {
-      setIsLoading(false);
+      console.error("Erro ao deletar produtos:", err);
       alert("Erro ao deletar produtos");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -72,26 +76,31 @@ const ListProduct = () => {
     setProductUpdate(data);
   };
 
+  const filteredProducts =
+    products?.filter((product) => {
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(searchProducts.toLowerCase()); 
+      return matchesSearch;
+    }) || [];
 
-  const filteredProducts = products?.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchProducts.toLowerCase()); // Filtro por nome, ele busca por nome e acresenta o filtro
-    return matchesSearch;
-  }) || [];
-
-  const maxProductsPerList = 6;
-  let contProductPages = Math.ceil(filteredProducts.length / maxProductsPerList);
+  const maxProductsPerList = 9;
+  let contProductPages = Math.ceil(
+    filteredProducts.length / maxProductsPerList
+  );
 
   return (
     <>
       {isLoading && <LoadingSpin />}
-      <FormNewProduct dataProduct={productUpdate} />
+      <FormNewProduct dataProduct={productUpdate} onSubmitSuccess={handleShowProducts}/>
       <div className="contentListProducts">
         <div className="ListProducts">
           <div className="headerListProducts">
             <div className="title">
+
               <BiSolidUser className="userIcon" size={75} />
-              <h3>Lista de Produtos  </h3>
-            </div >
+              <h3>Lista de Produtos </h3>
+            </div>
 
             <section>
               <label className="searchProduct">
@@ -104,10 +113,10 @@ const ListProduct = () => {
                 <a>
                   <BiSearch size={35} />
                 </a>
-
               </label>
             </section>
           </div>
+          <hr />
 
           <div className="ListProductsTable">
             <table>
@@ -116,20 +125,23 @@ const ListProduct = () => {
                   <th className="formatH4">Nome</th>
                   <th className="formatH4">Estoque</th>
                   <th className="formatH4">Preço</th>
-                  
                 </tr>
               </thead>
 
               <tbody>
                 <ModalYesOrNot
                   show={showModal}
-                  onClose={() => setShowModal(false)}
                   title="Deletar Produto?"
-                >
-                  <h6>Confirma Exclusão de {productNameShow && productNameShow}?</h6>
-                  <button onClick={() => window.handleModalConfirm(true)}>Sim</button>
-                  <button onClick={() => window.handleModalConfirm(false)}>Não</button>
-                </ModalYesOrNot>
+                  deleteItem={productNameShow}
+                  onConfirm={() => {
+                    window.handleModalConfirm(true);
+                    setShowModal(false);
+                  }}
+                  onClose={() => {
+                    window.handleModalConfirm(false);
+                    setShowModal(false);
+                  }}
+                />
 
                 <PageOfListProduct
                   products={filteredProducts}

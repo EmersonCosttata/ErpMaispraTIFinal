@@ -82,7 +82,6 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
             @ApiResponse(responseCode = "409", description = "Para manter integridade do BD não permite a exclusão")
     })
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         clientService.delete(id);
