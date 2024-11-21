@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./formNewClient.css";
+import "./FormNewClient.css";
 import { CgAdd, CgRemove } from "react-icons/cg";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";

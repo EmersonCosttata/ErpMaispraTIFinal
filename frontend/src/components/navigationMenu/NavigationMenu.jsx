@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import "./NavigationMenu.css";
+import "./navigationMenu.css";
 import arrayOptions from "./OptionNavigationMenu/OptionsNavigationMenu";
 
 function NavigationMenu() {

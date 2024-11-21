@@ -1,4 +1,4 @@
-import "./modalClient.css";
+import "./ModalClient.css";
 
 function ModalDetails({ show, onClose, content, title }) {
   if (!show) return null;
