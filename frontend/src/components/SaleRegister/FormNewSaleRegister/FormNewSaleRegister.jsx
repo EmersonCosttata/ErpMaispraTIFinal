@@ -11,7 +11,7 @@ import SelectFieldClient from "../../SelectField/SelectFieldClient";
 import SelectFieldProduct from "../../SelectField/SelectFieldProduct";
 import CardSaleRegister from './CardSaleRegister'
 
-function FormNewSaleRegister({ dataSaleRegister }) {
+function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
   const { JwtToken } = useAuth();
   const decoded = jwtDecode(JwtToken);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -104,6 +104,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       await Promise.all(saleRequests);
       setSuccess("Venda registrada com sucesso!");
       handleReset();
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (err) {
       console.log(err)
       setError("Erro ao registrar itens de venda");
@@ -142,7 +145,6 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   
       console.log("Venda atualizada:", response.data.saleItems[0].id);
       let updatedSaleIdList = response.data.saleItems.map((item) => item.id);
-      Console.log(updatedSaleIdList)
       const saleRequestsUpdate = CardItems.map((card, index) =>
         axios.put(
           `${apiUrl}/api/vendas/itens/${updatedSaleIdList[index]}`, 
@@ -163,6 +165,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       await Promise.all(saleRequestsUpdate);
       setSuccess("Venda e itens atualizados com sucesso!");
       handleReset();
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (err) {
       console.error("Erro ao atualizar venda:", err);
       setError("Erro ao atualizar itens de venda.");

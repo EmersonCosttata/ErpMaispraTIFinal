@@ -93,7 +93,7 @@ const ListSaleRegisters = () => {
   return (
     <>
       {isLoading && <LoadingSpin />}
-      <FormNewSaleRegister dataSaleRegister={saleRegisterUpdate} />
+      <FormNewSaleRegister dataSaleRegister={saleRegisterUpdate} onSubmitSuccess={handleShowSaleRegisters} />
 
       <div className="contentListSaleRegisters">
         <div className="ListSaleRegisters">
