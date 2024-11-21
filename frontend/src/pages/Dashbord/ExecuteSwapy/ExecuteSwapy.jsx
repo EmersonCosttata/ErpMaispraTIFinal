@@ -29,7 +29,7 @@ function ExecuteSwapy() {
         }
       );
 
-      setSwapData(response)
+      setSwapData(response.content)
       console.log('Dados do dashboard Baixados:');
     } catch (err) {
       console.error('Erro ao baixar dados do dashboard:');
@@ -83,10 +83,12 @@ function ExecuteSwapy() {
       );
       console.log(loggedUser)
       setUserData(loggedUser);
+
+      setLoading(false);
     } catch (err) {
       console.error(err);
       setError("Erro ao puxar usuário!");
-
+      setLoading(false);
     }
   };
 

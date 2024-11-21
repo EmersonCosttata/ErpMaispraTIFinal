@@ -56,8 +56,9 @@ const ListSaleRegisters = () => {
       };
       window.handleModalConfirm = handleConfirm;
     });
-    if (!confirmDelete) return;
-
+    if (!confirmDelete) {
+      return;
+    }
     setIsLoading(true);
     try {
       await axios.delete(`${apiUrl}/api/vendas/${saleRegister.id}`, {
@@ -92,7 +93,7 @@ const ListSaleRegisters = () => {
   return (
     <>
       {isLoading && <LoadingSpin />}
-      <FormNewSaleRegister dataSaleRegister={saleRegisterUpdate} />
+      <FormNewSaleRegister dataSaleRegister={saleRegisterUpdate} onSubmitSuccess={handleShowSaleRegisters} />
 
       <div className="contentListSaleRegisters">
         <div className="ListSaleRegisters">
@@ -159,14 +160,19 @@ const ListSaleRegisters = () => {
                 </tr>
               </thead>
               <tbody>
-                <ModalYesOrNot
+              <ModalYesOrNot
                   show={showModal}
-                  title="Deletar Registro de Venda?"
-                >
-                  <h6>Confirma Exclusão de {saleRegisterNameShow}?</h6>
-                  <button onClick={() => window.handleModalConfirm(true)}>Sim</button>
-                  <button onClick={() => window.handleModalConfirm(false)}>Não</button>
-                </ModalYesOrNot>
+                  title="Deletar Venda?"
+                  deleteItem={saleRegisterNameShow}
+                  onConfirm={() => {
+                    window.handleModalConfirm(true);
+                    setShowModal(false);
+                  }}
+                  onClose={() => {
+                    window.handleModalConfirm(false);
+                    setShowModal(false);
+                  }}
+                />
               
                 <PageOfListSaleRegister
                   SaleRegisters={filteredSaleRegisters}

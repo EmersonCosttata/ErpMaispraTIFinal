@@ -1,5 +1,5 @@
-import FormNewEmployee from "../../components/Employee/FormNewEmployee/FormNewEmployee";
-import ListEmployees from "../../components/Employee/ListEmployee/ListEmployees";
+
+import ListEmployees from "../../components/employee/ListEmployee/ListEmployees";
 import { useAuth } from "../../components/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
