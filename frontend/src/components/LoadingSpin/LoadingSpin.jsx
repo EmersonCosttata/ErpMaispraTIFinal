@@ -4,12 +4,12 @@ import './LoadingSpin.css';
 const LoadingSpin = () => {
   return (
     <>
-    {/* <div className="spinner-overlay">
+    <div className="spinner-overlay">
       <div className="spinner" />
       <style>
         
     </style>
-    </div> */}
+    </div>
     </>
   );
 };

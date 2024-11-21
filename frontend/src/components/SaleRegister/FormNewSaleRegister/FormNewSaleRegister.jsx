@@ -29,7 +29,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [NewSaleRegisterData, setNewSaleRegisterData] = useState('');
   const [NewSaleRegisterDataPrev, setNewSaleRegisterDataPrev] = useState('');
   const [NewSaleRegisterProduct, setNewSaleRegisterProduct] = useState();
-  const [NewSaleRegisterQuant, setNewSaleRegisterQuant] = useState('');
+  const [NewSaleRegisterQuant, setNewSaleRegisterQuant] = useState(0);
   const [CardItems, setCardItems] = useState([]);
   const [cardId, setCardId] = useState(1);
 
@@ -61,7 +61,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-  // Validação do formulário
+
   if (!document.getElementById("formSaleRegister").reportValidity()) {
     setError("Preencha todos os campos!");
     setIsLoading(false);
@@ -123,7 +123,6 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       expectedDeliveryDate: NewSaleRegisterDataPrev, 
       saleStatus: "pendente",
     };
-   // Validação do formulário
    if (!document.getElementById("formSaleRegister").reportValidity()) {
     setError("Preencha todos os campos!");
     setIsLoading(false);
@@ -175,8 +174,6 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       setIsLoading(false);
     }
   };
-  
-
 
   const deleteCardItem = (idToDelete) => {
     setIsLoading(true)
@@ -207,6 +204,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
     e.preventDefault();
     if (!NewSaleRegisterProduct || NewSaleRegisterProduct.length === 0) {
       setError("Nenhum produto foi selecionado.");
+      setIsLoading(false)
       return;
     }
     const selectedProduct = NewSaleRegisterProduct[0];
@@ -275,7 +273,7 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       return [...prevItems, NewItemtoCard];
     });
   
-    setNewSaleRegisterQuant("");
+    setNewSaleRegisterQuant(0);
     setError("");
     setIsLoading(!true)
   };

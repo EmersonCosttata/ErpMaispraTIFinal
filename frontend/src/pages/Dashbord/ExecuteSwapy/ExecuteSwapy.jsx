@@ -95,7 +95,7 @@ function ExecuteSwapy() {
     // apiGetSwap()
   }, []);
 
-console.log(SwapData)
+
   swapy.enable(true)
 
   const handleSwap = debounce((event) => {

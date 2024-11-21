@@ -139,7 +139,9 @@ font-size: 1.2em;
     height: 80vh;
     padding: 1.5em;
   }
-
+.modalDetailsButtonConfirm{
+  width: 100%;
+}
   .rowSale {
     grid-template-columns: 1fr;
   }
