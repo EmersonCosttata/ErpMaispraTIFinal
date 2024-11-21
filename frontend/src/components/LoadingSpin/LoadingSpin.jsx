@@ -9,7 +9,6 @@ const LoadingSpin = () => {
         
     </style>
     </div>
-    </>
   );
 };
 

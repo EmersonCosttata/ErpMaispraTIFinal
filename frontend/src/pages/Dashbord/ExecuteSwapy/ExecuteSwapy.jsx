@@ -41,12 +41,28 @@ function ExecuteSwapy() {
     }
 
   }
+const handleShowEmployees = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/usuarios`, {
+        headers: {
+          Authorization: `Bearer ${JwtToken}`,
+        },
+      });
+      const loggedUser = response.data.content.find(
+        (user) => user.email === decoded.sub
+      );
+      console.log(loggedUser)
+      setUserData(loggedUser);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const apiResgisterSwap = async (userId, obj) => {
     try {
 
       const response = await axios.post(
-        `${apiUrl} / api / usuarios / ${userId} / cards`,
+        `${apiUrl}/api/usuarios/${userId}/cards`,
         obj,
         {
           headers: {
@@ -71,26 +87,7 @@ function ExecuteSwapy() {
 
   }
 
-  const handleShowEmployees = async () => {
-    try {
-      const response = await axios.get(`${ apiUrl } / api / usuarios`, {
-        headers: {
-          Authorization: `Bearer ${JwtToken}`,
-        },
-      });
-      const loggedUser = response.data.content.find(
-        (user) => user.email === decoded.sub
-      );
-      console.log(loggedUser)
-      setUserData(loggedUser);
-
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setError("Erro ao puxar usuário!");
-      setLoading(false);
-    }
-  };
+  
 
   useEffect(() => {
     handleShowEmployees();
