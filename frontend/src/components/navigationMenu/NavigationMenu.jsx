@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import "./NavigationMenu.css";
-import arrayOptions from "./OptionNavigationMenu/OptionsNavigationMenu";
+import "./navigationMenu.css";
+import arrayOptions from "./optionNavigationMenu/OptionsNavigationMenu";
 
 function NavigationMenu() {
   const navigate = useNavigate();

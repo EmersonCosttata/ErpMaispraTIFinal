@@ -1,5 +1,5 @@
 import userIcon from "../../assets/icons/userIcon.svg";
-import "./AccountContainer.css";
+import "./accountContainer.css";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../AuthContext";
 import { useState, useEffect, useRef } from "react";

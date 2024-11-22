@@ -4,18 +4,18 @@ import "./assets/css/buttons.css";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import Header from "./components/Header/Header";
+import Header from "./components/header/header";
 import ProtectedRoute from "./components/ProtectedRoute";
-import NavigationMenu from "./components/NavigationMenu/NavigationMenu";
-import AddClientPage from "./pages/AddClientPage/AddClientPage";
-import HomePage from "./pages/HomePage";
+import NavigationMenu from "./components/navigationMenu/NavigationMenu";
+import AddClientPage from "./pages/addClientPage/AddClientPage";
+import HomePage from "./pages//HomePage";
 import Login from "./pages/LoginPage/Login";
 import { useAuth } from "./components/AuthContext";
 import AddEmployeePage from "./pages/addEmployeePage/AddEmployeePage";
-import AddProductPage from "./pages/AddProductPage/AddProductPage";
+import AddProductPage from "./pages/addProductPage/addProductPage";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
-import AddSupplierpage from "./pages/AddSupplierpage/AddSupplierpage";
-import AddSaleRegister from "./pages/AddSaleRegister/AddSaleRegister";
+import AddSupplierpage from "./pages/addSupplierpage/AddSupplierpage";
+import AddSaleRegister from "./pages/addSaleRegister/AddSaleRegister";
 import SupplyPurchasingPage from "./pages/SupplyPurchasingPage/SupplyPurchasingPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
 import UserPage from "./pages/UserPage/UserPage";

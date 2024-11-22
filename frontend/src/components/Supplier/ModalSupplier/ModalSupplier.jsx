@@ -3,7 +3,6 @@ import "./ModalSupplier.css";
 function ModalDetails({ show, onClose, content, title }) {
   if (!show) return null;
   console.log(content);
-  let formatedRoles, formatedBDate;
 
   return (
     <div className="modalDetailsOverlaySupplier">

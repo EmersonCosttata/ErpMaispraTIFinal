@@ -70,14 +70,14 @@ const handleCreateDelivery = async (e) => {
       }
     );
     console.log("Retorno:", response.data);
-    const saleId = response.data.sale.id;
+    const saleId = response.data.id;
 
-    // Registrar itens de entrega
+    console.log('Modal',ModalContent.saleItems[0].product.id)
     const saleRequests = ModalContent.saleItems.map((sale) =>
       axios.post(
         `${apiUrl}/api/entregas/${saleId}/itens`,
         {
-          saleItemId: sale.id,
+          saleItemId: sale.product.id,
           quantityDelivery: sale.quantitySold,
         },
         {

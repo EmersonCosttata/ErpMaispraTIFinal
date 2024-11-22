@@ -11,7 +11,7 @@ import SelectFieldClient from "../../SelectField/SelectFieldClient";
 import SelectFieldProduct from "../../SelectField/SelectFieldProduct";
 import CardSaleRegister from './CardSaleRegister'
 
-function FormNewSaleRegister({ dataSaleRegister }) {
+function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
   const { JwtToken } = useAuth();
   const decoded = jwtDecode(JwtToken);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -29,11 +29,12 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const [NewSaleRegisterData, setNewSaleRegisterData] = useState('');
   const [NewSaleRegisterDataPrev, setNewSaleRegisterDataPrev] = useState('');
   const [NewSaleRegisterProduct, setNewSaleRegisterProduct] = useState();
-  const [NewSaleRegisterQuant, setNewSaleRegisterQuant] = useState('');
+  const [NewSaleRegisterQuant, setNewSaleRegisterQuant] = useState(0);
   const [CardItems, setCardItems] = useState([]);
   const [cardId, setCardId] = useState(1);
 
   const ValuestoUpdate = (values) => {
+
     setCardItems([]);
     setNewSaleRegisterSaleId(values.id);
     setNewSaleRegisterClient(values.client);
@@ -60,6 +61,12 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+
+  if (!document.getElementById("formSaleRegister").reportValidity()) {
+    setError("Preencha todos os campos!");
+    setIsLoading(false);
+    return;
+  }
 
     try {
       const response = await axios.post(
@@ -97,6 +104,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       await Promise.all(saleRequests);
       setSuccess("Venda registrada com sucesso!");
       handleReset();
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (err) {
       console.log(err)
       setError("Erro ao registrar itens de venda");
@@ -116,7 +126,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       expectedDeliveryDate: NewSaleRegisterDataPrev, 
       saleStatus: "pendente",
     };
-  
+   if (!document.getElementById("formSaleRegister").reportValidity()) {
+    setError("Preencha todos os campos!");
+    setIsLoading(false);
+    return;
+  }
     try {
       const response = await axios.put(
         `${apiUrl}/api/vendas/${NewSaleRegisterSaleId}`,
@@ -131,7 +145,6 @@ function FormNewSaleRegister({ dataSaleRegister }) {
   
       console.log("Venda atualizada:", response.data.saleItems[0].id);
       let updatedSaleIdList = response.data.saleItems.map((item) => item.id);
-      Console.log(updatedSaleIdList)
       const saleRequestsUpdate = CardItems.map((card, index) =>
         axios.put(
           `${apiUrl}/api/vendas/itens/${updatedSaleIdList[index]}`, 
@@ -152,6 +165,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       await Promise.all(saleRequestsUpdate);
       setSuccess("Venda e itens atualizados com sucesso!");
       handleReset();
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (err) {
       console.error("Erro ao atualizar venda:", err);
       setError("Erro ao atualizar itens de venda.");
@@ -163,10 +179,9 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       setIsLoading(false);
     }
   };
-  
-
 
   const deleteCardItem = (idToDelete) => {
+    setIsLoading(true)
     setCardItems((prevItems) => prevItems.filter(item => item.id !== idToDelete));
     setCardId(cardId - 1);
     setCardItems((prevItems) => {
@@ -186,12 +201,15 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       return prevItems.filter(item => item.id !== idToDelete);
     });
     setCardId((prevId) => prevId - 1);
+    setIsLoading(!true)
   };
 
   const handleAddtoCard = (e) => {
+    setIsLoading(true)
     e.preventDefault();
     if (!NewSaleRegisterProduct || NewSaleRegisterProduct.length === 0) {
       setError("Nenhum produto foi selecionado.");
+      setIsLoading(false)
       return;
     }
     const selectedProduct = NewSaleRegisterProduct[0];
@@ -260,10 +278,12 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       return [...prevItems, NewItemtoCard];
     });
   
-    setNewSaleRegisterQuant("");
+    setNewSaleRegisterQuant(0);
     setError("");
+    setIsLoading(!true)
   };
   const handleGetClients = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(`${apiUrl}/api/clientes`, {
         headers: {
@@ -271,11 +291,11 @@ function FormNewSaleRegister({ dataSaleRegister }) {
         },
       });
       setListClients(response.data.content);
+      setIsLoading(!true)
     } catch (err) {
       console.error("Erro ao puxar clientes", err);
     }
   };
-
   const handleGetProducts = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/produtos`, {
@@ -286,7 +306,8 @@ function FormNewSaleRegister({ dataSaleRegister }) {
       setListProducts(response.data.content);
     } catch (err) {
       console.error("Erro ao puxar produtos", err);
-    }
+    }finally{
+    setIsLoading(!true)}
   };
 
   const handleReset = () => {

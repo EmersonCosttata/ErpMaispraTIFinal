@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./formNewClient.css";
+import "./FormNewClient.css";
 import { CgAdd, CgRemove } from "react-icons/cg";
 import axios from "axios";
 import { useAuth } from "../../AuthContext";
@@ -302,7 +302,7 @@ function FormNewClient( { dataClient, onSubmitSuccess }) {
         }
       );
       handleReset();
-      setSuccess("Cliente Atualizado com sucesso!");
+      setSuccess("Cliente atualizado com sucesso!");
       setIsLoading(!isLoading)
       setError(null);
       SetPostToUpdade(true)
