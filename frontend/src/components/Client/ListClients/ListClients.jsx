@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../AuthContext.jsx";
 import "./ListClients.css";
 import FormNewClient from "../FormNewClient/FormNewClient.jsx";
-import NavigationListClients from "./navigationListClients.jsx";
+import NavigationListClients from "./NavigationListClients.jsx";
 import PageOfListClients from "./PageOfListClients.jsx";
 import LoadingSpin from "../../LoadingSpin/LoadingSpin.jsx";
 
