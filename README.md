@@ -71,4 +71,6 @@ Para rodar o front, na mesma pasta : npm run server
 
 Backend: Abrir na sua ide de java a pasta backend (Certifique que você ja tem maven) e executar MaisPraTiApplication na pasta Main!
 
+**Trocar no front o .env pra http:localhost:8080
+
 
