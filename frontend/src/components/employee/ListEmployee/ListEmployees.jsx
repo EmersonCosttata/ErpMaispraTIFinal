@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../AuthContext.jsx";
 import "./ListEmployees.css";
-import FormNewEmployee from "../FormNewEmployee/FormNewEmployee.jsx";
+import FormNewEmployee from "../formNewEmployee/FormNewEmployee.jsx";
 import NavigationListEmployees from "./NavigationListEmployees.jsx";
 import PageOfListEmployees from "./PageOfListEmployees.jsx";
 import LoadingSpin from "../../LoadingSpin/LoadingSpin.jsx";
