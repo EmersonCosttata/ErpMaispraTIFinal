@@ -72,7 +72,7 @@ const handleCreateDelivery = async (e) => {
     console.log("Retorno:", response.data);
     const saleId = response.data.id;
 
-    console.log('Modal',ModalContent.saleItems[0].product.id)
+    console.log('Modal',ModalContent.saleItems.id)
     const saleRequests = ModalContent.saleItems.map((sale) =>
       axios.post(
         `${apiUrl}/api/entregas/${saleId}/itens`,

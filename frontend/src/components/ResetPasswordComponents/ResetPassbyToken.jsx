@@ -33,7 +33,7 @@ const ResetPassbyToken = ({ token }) => {
     const cpfRegex =
       /^(?!.*(\d)(?:-?\1){10})\d{3}\.\d{3}\.\d{3}-\d{2}$|^(\d{11})$/;
     if (!cpfRegex.test(cpf)) {
-      setError("CPF Invalido");
+      setError("CPF Invalidos");
       return false;
     } else {
       setError("");

@@ -104,6 +104,7 @@ function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
       await Promise.all(saleRequests);
       setSuccess("Venda registrada com sucesso!");
       handleReset();
+      setError("");
       if (onSubmitSuccess) {
         onSubmitSuccess();
       }
@@ -115,6 +116,7 @@ function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
       }
     } finally {
       setIsLoading(false);
+      setError("");
     }
   };
 
@@ -176,6 +178,7 @@ function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
         setError(err.response.data.message || "Erro desconhecido.");
       }
     } finally {
+      setError("");
       setIsLoading(false);
     }
   };
@@ -205,7 +208,6 @@ function FormNewSaleRegister({ dataSaleRegister , onSubmitSuccess }) {
   };
 
   const handleAddtoCard = (e) => {
-    setIsLoading(true)
     e.preventDefault();
     if (!NewSaleRegisterProduct || NewSaleRegisterProduct.length === 0) {
       setError("Nenhum produto foi selecionado.");
