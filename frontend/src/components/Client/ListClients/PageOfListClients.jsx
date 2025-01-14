@@ -1,7 +1,7 @@
 import { BiEdit, BiAt, BiPhone, BiFileBlank } from "react-icons/bi";
 
 import { MdDeleteOutline } from "react-icons/md";
-import ModalDetails from "../ModalClient/ModalClient";
+import ModalDetails from "../ModalClient/ModalClient.jsx";
 import { BiDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
